@@ -32,8 +32,14 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            // Feature dependencies
+            implementation(projects.feature.materialYou.data)
+            implementation(projects.feature.materialYou.domain)
+            implementation(projects.feature.materialYou.presentation)
         }
         commonMain.dependencies {
+            // Compose
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -42,13 +48,41 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            // Navigation
+            implementation(libs.navigation.compose)
+
+            // Room
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
+
+            // Koin
+            implementation(project.dependencies.platform(libs.koinBom))
+            implementation(libs.koinCore)
+            implementation(libs.koinComposeViewModel)
+
+            // Feature dependencies
+            implementation(projects.feature.themeSelection.domain)
+            implementation(projects.feature.themeSelection.presentation)
+
+            // UI dependencies
+            implementation(projects.ui.navigation)
+            implementation(projects.ui.theme)
+            implementation(projects.ui.utils)
+
+            // Core dependencies
+            implementation(projects.core.model.routes)
+            implementation(projects.core.network)
+            implementation(projects.core.provider.dataStore)
+            implementation(projects.core.provider.koin)
+            implementation(projects.core.provider.room)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
         jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutinesSwing)
+            // DO NOT DELETE: Provide Dispatchers.Main for Desktop via Swing
+            implementation(libs.kotlinx.coroutines.swing)
         }
     }
 }
