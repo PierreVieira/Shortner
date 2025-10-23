@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pierre.shortner.model.theme.Theme
-import com.pierre.shortner.ui.theme.AppTheme
 import com.pierre.shortner.ui.theme.preview.AllThemePreferencesPreviewParameterProvider
 import com.pierre.shortner.ui.theme.preview.PreviewTheme
 import org.jetbrains.compose.resources.stringResource

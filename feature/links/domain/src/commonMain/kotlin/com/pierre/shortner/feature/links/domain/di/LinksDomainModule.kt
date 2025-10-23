@@ -1,6 +1,5 @@
 package com.pierre.shortner.feature.links.domain.di
 
-import com.pierre.shortner.feature.links.domain.repository.LinksRepository
 import com.pierre.shortner.feature.links.domain.usecase.DeleteAllLinksUseCase
 import com.pierre.shortner.feature.links.domain.usecase.DeleteLinkUseCase
 import com.pierre.shortner.feature.links.domain.usecase.GetAllLinksUseCase

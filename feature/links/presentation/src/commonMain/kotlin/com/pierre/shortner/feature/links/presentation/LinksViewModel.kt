@@ -76,7 +76,7 @@ class LinksViewModel(
                     try {
                         deleteLinkUseCase(event.id)
                         _uiActions.emit(LinksUiAction.ShowSnackbar("Link deleted"))
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         _uiActions.emit(LinksUiAction.ShowSnackbar("Failed to delete link"))
                     }
                 }

@@ -14,22 +14,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
-import com.pierre.shortner.model.theme.Theme
 import com.pierre.shortner.feature.theme_selection.presentation.component.ThemeOptionCard
 import com.pierre.shortner.feature.theme_selection.presentation.factory.ThemeOptionsFactory
 import com.pierre.shortner.feature.theme_selection.presentation.model.ThemeSelectionModel
 import com.pierre.shortner.feature.theme_selection.presentation.model.ThemeSelectionUiEvent
+import com.pierre.shortner.model.theme.Theme
 import com.pierre.shortner.ui.components.icon_button.ArrowBackIconButton
 import com.pierre.shortner.ui.theme.preview.AllThemePreferencesPreviewParameterProvider
 import com.pierre.shortner.ui.theme.preview.PreviewTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
