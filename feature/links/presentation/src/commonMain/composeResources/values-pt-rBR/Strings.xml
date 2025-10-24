@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="links_screen_title">Encurtador</string>
-    <string name="enter_url_hint">Digite a URL para encurtar</string>
-    <string name="shorten_button">Encurtar</string>
     <string name="delete_all_button">Excluir Todos</string>
     <string name="theme_button">Tema</string>
     <string name="no_links_message">Nenhum link encurtado ainda. Encurte um link para começar!</string>
-    <string name="invalid_url_error">Por favor, digite uma URL válida</string>
-    <string name="empty_url_error">A URL não pode estar vazia</string>
-    <string name="shorten_url_error">Falha ao encurtar URL. Tente novamente.</string>
     <string name="delete_confirmation_title">Excluir Todos os Links</string>
     <string name="delete_confirmation_message">Tem certeza de que deseja excluir todos os links encurtados? Esta ação não pode ser desfeita.</string>
     <string name="delete_confirmation_confirm">Excluir Todos</string>

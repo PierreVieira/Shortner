@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.pierre.shortner.feature.links.input.presentation.UrlInputFieldRoot
 import com.pierre.shortner.feature.links.presentation.model.action.LinksUiAction
 import com.pierre.shortner.feature.links.presentation.screen.LinksScreen
 import com.pierre.shortner.feature.links.presentation.viewmodel.LinksViewModel
@@ -28,6 +29,7 @@ fun NavGraphBuilder.links(
             when (action) {
                 is LinksUiAction.ShowSnackbar -> snackbarHostState
                     .showSnackbar(getString(action.resourceId))
+
                 is LinksUiAction.Navigate -> navController.navigate(action.route)
             }
         }
@@ -36,7 +38,13 @@ fun NavGraphBuilder.links(
             snackbarHostState = snackbarHostState,
             uiState = uiState,
             onEvent = viewModel::onEvent,
-            topBar = { ShortenerTopAppBarRoot(navController, snackbarHostState) }
+            topBar = { ShortenerTopAppBarRoot(navController, snackbarHostState) },
+            inputField = { modifier ->
+                UrlInputFieldRoot(
+                    modifier = modifier,
+                    snackbarHostState = snackbarHostState
+                )
+            }
         )
     }
 }

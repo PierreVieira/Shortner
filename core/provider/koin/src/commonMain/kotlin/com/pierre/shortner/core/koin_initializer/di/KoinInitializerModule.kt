@@ -6,6 +6,9 @@ import com.pierre.shortner.feature.links.data.di.linksDataModule
 import com.pierre.shortner.feature.links.delete_all.di.deleteAllLinksDataModule
 import com.pierre.shortner.feature.links.delete_all.presentation.di.deleteAllLinksPresentationModule
 import com.pierre.shortner.feature.links.domain.di.linksDomainModule
+import com.pierre.shortner.feature.links.input.data.di.inputDataModule
+import com.pierre.shortner.feature.links.input.domain.di.inputDomainModule
+import com.pierre.shortner.feature.links.input.presentation.di.inputPresentationModule
 import com.pierre.shortner.feature.links.presentation.di.linksPresentationModule
 import com.pierre.shortner.feature.links.top_bar.data.di.shortenerTopBarDataModule
 import com.pierre.shortner.feature.links.top_bar.domain.di.shortenerTopBarDomainModule
@@ -35,6 +38,9 @@ fun commonKoinInitializer(
             linksDataModule,
             linksDomainModule,
             linksPresentationModule,
+            inputDataModule,
+            inputDomainModule,
+            inputPresentationModule,
             shortenerTopBarDataModule,
             shortenerTopBarDomainModule,
             shortenerTopBarPresentationModule,

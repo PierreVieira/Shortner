@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enter_url_hint">Enter URL to shorten</string>
+    <string name="shorten_button">Shorten</string>
+    <string name="invalid_url_error">Please enter a valid URL</string>
+    <string name="empty_url_error">The URL should not be empty</string>
+    <string name="shorten_url_error">Failed to shorten URL. Please try again.</string>
+</resources>

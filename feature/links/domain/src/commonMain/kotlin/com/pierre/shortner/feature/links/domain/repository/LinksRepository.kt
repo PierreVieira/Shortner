@@ -4,7 +4,6 @@ import com.pierre.shortner.feature.links.domain.model.Link
 import kotlinx.coroutines.flow.Flow
 
 interface LinksRepository {
-    suspend fun postUrl(url: String): Result<Unit>
     fun getAllLinks(): Flow<List<Link>>
     suspend fun deleteLink(id: Long)
     suspend fun deleteAllLinks()

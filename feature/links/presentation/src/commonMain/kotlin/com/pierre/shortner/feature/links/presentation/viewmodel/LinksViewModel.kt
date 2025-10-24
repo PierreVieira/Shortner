@@ -4,11 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pierre.shortner.core.utils.toFormattedString
 import com.pierre.shortner.feature.links.domain.model.Link
-import com.pierre.shortner.feature.links.domain.model.UrlValidationException
 import com.pierre.shortner.feature.links.domain.usecase.DeleteLinkUseCase
 import com.pierre.shortner.feature.links.domain.usecase.GetAllLinksUseCase
-import com.pierre.shortner.feature.links.domain.usecase.ShortenUrlUseCase
-import com.pierre.shortner.feature.links.domain.usecase.ValidateUrlUseCase
 import com.pierre.shortner.feature.links.presentation.model.LinkPresentationModel
 import com.pierre.shortner.feature.links.presentation.model.action.LinksUiAction
 import com.pierre.shortner.feature.links.presentation.model.event.LinksUiEvent
@@ -20,15 +17,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import shortener.feature.links.presentation.generated.resources.Res
-import shortener.feature.links.presentation.generated.resources.empty_url_error
-import shortener.feature.links.presentation.generated.resources.invalid_url_error
-import shortener.feature.links.presentation.generated.resources.shorten_url_error
 
 class LinksViewModel(
-    private val postUrlToShort: ShortenUrlUseCase,
     private val deleteLink: DeleteLinkUseCase,
-    private val validateUrl: ValidateUrlUseCase,
     getAllLinks: GetAllLinksUseCase,
 ) : ViewModel() {
 
@@ -94,23 +85,9 @@ class LinksViewModel(
             is LinksUiEvent.OnToggleCardCollapse -> {
                 updateLinkById(event.linkId) { it.copy(isCardExpanded = !it.isCardExpanded) }
             }
-
-            is LinksUiEvent.OnShortenUrlClick -> shortenUrl()
-
-            is LinksUiEvent.OnUrlTextChange -> updateUrlText(event.text)
         }
     }
 
-    private fun updateUrlText(text: String) {
-        _uiState.update { it.copy(urlText = text) }
-    }
-    
-    private fun launchAndEmit(action: LinksUiAction) {
-        viewModelScope.launch {
-            _uiActions.emit(action)
-        }
-    }
-    
     private fun updateLinkById(linkId: Long, transform: (LinkPresentationModel) -> LinkPresentationModel) {
         _uiState.update { currentState ->
             currentState.copy(
@@ -130,43 +107,6 @@ class LinksViewModel(
             currentState.copy(
                 links = currentState.links.map(transform)
             )
-        }
-    }
-    
-    private fun shortenUrl() {
-        val url = uiState.value.urlText.trim()
-        validateUrl(url)
-            .onSuccess {
-                setLoadingState(true)
-                viewModelScope.launch {
-                    postUrlToShort(url)
-                        .onSuccess {
-                            setLoadingState(false)
-                            updateUrlText("")
-                        }
-                        .onFailure {
-                            setLoadingState(false)
-                            _uiActions.emit(LinksUiAction.ShowSnackbar(Res.string.shorten_url_error))
-                        }
-                }
-            }.onFailure { failure ->
-                launchAndEmit(getValidationErrorMessage(failure))
-            }
-    }
-    
-    private fun setLoadingState(isLoading: Boolean) {
-        _uiState.update { it.copy(isSendButtonLoading = isLoading) }
-    }
-    
-    private fun getValidationErrorMessage(failure: Throwable): LinksUiAction {
-        return if (failure is UrlValidationException) {
-            val message = when (failure) {
-                is UrlValidationException.Empty -> Res.string.empty_url_error
-                is UrlValidationException.Invalid -> Res.string.invalid_url_error
-            }
-            LinksUiAction.ShowSnackbar(message)
-        } else {
-            LinksUiAction.ShowSnackbar(Res.string.shorten_url_error)
         }
     }
 }

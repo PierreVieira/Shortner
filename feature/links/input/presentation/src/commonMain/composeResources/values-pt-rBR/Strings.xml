@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enter_url_hint">Digite a URL para encurtar</string>
+    <string name="shorten_button">Encurtar</string>
+    <string name="invalid_url_error">Por favor, digite uma URL válida</string>
+    <string name="empty_url_error">A URL não pode estar vazia</string>
+    <string name="shorten_url_error">Falha ao encurtar URL. Tente novamente.</string>
+</resources>

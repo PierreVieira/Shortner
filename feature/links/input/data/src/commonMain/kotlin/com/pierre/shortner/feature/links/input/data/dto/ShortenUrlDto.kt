@@ -1,4 +1,4 @@
-package com.pierre.shortner.feature.links.data.dto
+package com.pierre.shortner.feature.links.input.data.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

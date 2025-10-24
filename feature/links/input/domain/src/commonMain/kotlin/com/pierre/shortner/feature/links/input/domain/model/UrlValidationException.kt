@@ -1,4 +1,4 @@
-package com.pierre.shortner.feature.links.domain.model
+package com.pierre.shortner.feature.links.input.domain.model
 
 sealed class UrlValidationException: IllegalArgumentException() {
     class Empty : UrlValidationException()

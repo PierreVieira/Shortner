@@ -14,7 +14,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "LinksPresentation"
+            baseName = "InputPresentation"
             isStatic = true
         }
     }
@@ -49,16 +49,11 @@ kotlin {
 
             // UI
             implementation(projects.ui.theme)
-            implementation(projects.ui.components.deleteDialog)
-            implementation(projects.ui.components.spacer)
             implementation(projects.ui.components.iconButton)
             implementation(projects.ui.utils)
 
             // Features
-            implementation(projects.feature.links.domain)
-            implementation(projects.feature.links.input.presentation)
-            implementation(projects.feature.links.deleteAll.presentation)
-            implementation(projects.feature.links.topBar.presentation)
+            implementation(projects.feature.links.input.domain)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -71,9 +66,8 @@ dependencies {
     debugImplementation(libs.uiTooling)
 }
 
-
 android {
-    namespace = "com.pierre.shortner.feature.links.presentation"
+    namespace = "com.pierre.shortner.feature.links.input.presentation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

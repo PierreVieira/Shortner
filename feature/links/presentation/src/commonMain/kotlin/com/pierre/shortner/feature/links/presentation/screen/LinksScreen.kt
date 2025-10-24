@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.pierre.shortner.feature.links.presentation.component.LinkCard
-import com.pierre.shortner.feature.links.presentation.component.UrlInputField
 import com.pierre.shortner.feature.links.presentation.model.LinkPresentationModel
 import com.pierre.shortner.feature.links.presentation.model.event.LinksUiEvent
 import com.pierre.shortner.feature.links.presentation.model.state.LinksUiState
@@ -44,7 +43,8 @@ fun LinksScreen(
     uiState: LinksUiState,
     snackbarHostState: SnackbarHostState,
     onEvent: (LinksUiEvent) -> Unit,
-    topBar: @Composable () -> Unit
+    topBar: @Composable () -> Unit,
+    inputField: @Composable (Modifier) -> Unit,
 ) {
     Scaffold(
         topBar = topBar,
@@ -57,12 +57,7 @@ fun LinksScreen(
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            UrlInputField(
-                modifier = Modifier.padding(bottom = 16.dp),
-                urlText = uiState.urlText,
-                isLoading = uiState.isSendButtonLoading,
-                onEvent = onEvent
-            )
+            inputField(Modifier.padding(bottom = 16.dp),)
 
             AnimatedContent(
                 targetState = uiState.links.isEmpty(),
@@ -127,5 +122,6 @@ private fun LinksScreenPreview() {
         snackbarHostState = remember { SnackbarHostState() },
         onEvent = {},
         topBar = {},
+        inputField = {}
     )
 }
