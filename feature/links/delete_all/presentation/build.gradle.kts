@@ -14,7 +14,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "LinksPresentation"
+            baseName = "DeleteAllPresentation"
             isStatic = true
         }
     }
@@ -55,9 +55,7 @@ kotlin {
             implementation(projects.ui.utils)
 
             // Features
-            implementation(projects.feature.links.domain)
-            implementation(projects.feature.links.deleteAll.presentation)
-            implementation(projects.feature.links.topBar)
+            implementation(projects.feature.links.deleteAll.domain)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -70,9 +68,8 @@ dependencies {
     debugImplementation(libs.uiTooling)
 }
 
-
 android {
-    namespace = "com.pierre.shortner.feature.links.presentation"
+    namespace = "com.pierre.shortner.feature.links.delete_all.presentation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

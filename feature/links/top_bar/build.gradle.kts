@@ -13,7 +13,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "Navigation"
+            baseName = "TopBar"
             isStatic = true
         }
     }
@@ -22,27 +22,35 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Core
+            implementation(projects.core.model.routes)
+
+            // Theme
+            implementation(projects.ui.components.iconButton)
+            implementation(projects.ui.theme)
+            implementation(projects.ui.utils)
+
             // Compose
             implementation(compose.runtime)
-            implementation(compose.ui)
             implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
 
             // Navigation
             implementation(libs.navigation.compose)
 
-            // Core
-            implementation(projects.core.model.routes)
-
-            // Feature
-            implementation(projects.feature.links.presentation)
-            implementation(projects.feature.links.deleteAll.presentation)
-            implementation(projects.feature.themeSelection.presentation)
+            // Koin
+            implementation(project.dependencies.platform(libs.koinBom))
+            implementation(libs.koinCore)
+            implementation(libs.koinComposeViewModel)
         }
     }
 }
 
 android {
-    namespace = "org.pierre.tvmaze.ui.navigation"
+    namespace = "com.pierre.shortner.feature.links.top_bar"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

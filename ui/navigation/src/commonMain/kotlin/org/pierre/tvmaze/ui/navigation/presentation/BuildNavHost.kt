@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.pierre.shortner.feature.links.presentation.root.deleteAll
-import com.pierre.shortner.feature.links.presentation.root.links
+import com.pierre.shortner.feature.links.delete_all.presentation.deleteAll
+import com.pierre.shortner.feature.links.presentation.links
 import com.pierre.shortner.feature.theme_selection.presentation.themeSettings
 
 fun NavGraphBuilder.buildNavHost(

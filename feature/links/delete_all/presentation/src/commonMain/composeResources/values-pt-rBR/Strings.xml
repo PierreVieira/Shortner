@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="delete_confirmation_title">Excluir Todos os Links</string>
+    <string name="delete_confirmation_message">Tem certeza de que deseja excluir todos os links encurtados? Esta ação não pode ser desfeita.</string>
+</resources>

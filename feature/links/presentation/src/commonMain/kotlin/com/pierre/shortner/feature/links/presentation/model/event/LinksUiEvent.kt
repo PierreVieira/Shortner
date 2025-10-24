@@ -1,8 +1,6 @@
 package com.pierre.shortner.feature.links.presentation.model.event
 
 sealed interface LinksUiEvent {
-    data object OnThemeClick : LinksUiEvent
-    data object OnDeleteAllClick : LinksUiEvent
     data object OnShortenUrlClick : LinksUiEvent
     data class OnDeleteLink(val id: Long) : LinksUiEvent
     data class OnCopyLink(val id: Long) : LinksUiEvent

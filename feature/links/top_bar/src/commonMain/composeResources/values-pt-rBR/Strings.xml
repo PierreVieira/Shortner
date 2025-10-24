@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortener_screen_title">Encurtador</string>
+    <string name="change_theme_button_content_description">Mudar tema</string>
+    <string name="delete_all_button_content_description">Deletar todos os links</string>
+    <string name="there_are_no_links_to_delete">Não há links para remover</string>
+</resources>

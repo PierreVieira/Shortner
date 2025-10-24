@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 kotlin {
@@ -13,7 +12,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "Navigation"
+            baseName = "DeleteAllDomain"
             isStatic = true
         }
     }
@@ -22,27 +21,27 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // Compose
-            implementation(compose.runtime)
-            implementation(compose.ui)
-            implementation(compose.foundation)
+            // Koin (feature DI)
+            implementation(project.dependencies.platform(libs.koinBom))
+            implementation(libs.koinCore)
 
-            // Navigation
-            implementation(libs.navigation.compose)
+            // Coroutines
+            implementation(libs.kotlinx.coroutines.core)
+
+            // DateTime
+            implementation(libs.kotlinx.datetime)
 
             // Core
-            implementation(projects.core.model.routes)
-
-            // Feature
-            implementation(projects.feature.links.presentation)
-            implementation(projects.feature.links.deleteAll.presentation)
-            implementation(projects.feature.themeSelection.presentation)
+            implementation(projects.core.utils)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 }
 
 android {
-    namespace = "org.pierre.tvmaze.ui.navigation"
+    namespace = "com.pierre.shortner.feature.links.delete_all.domain"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

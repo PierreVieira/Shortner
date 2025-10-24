@@ -13,8 +13,6 @@ import com.pierre.shortner.feature.links.presentation.model.LinkPresentationMode
 import com.pierre.shortner.feature.links.presentation.model.action.LinksUiAction
 import com.pierre.shortner.feature.links.presentation.model.event.LinksUiEvent
 import com.pierre.shortner.feature.links.presentation.model.state.LinksUiState
-import com.pierre.shortner.model.routes.DeleteAllRoute
-import com.pierre.shortner.model.routes.theme.ThemeSettingsRoute
 import com.pierre.shortner.ui.utils.observe
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -68,14 +66,6 @@ class LinksViewModel(
 
     fun onEvent(event: LinksUiEvent) {
         when (event) {
-            LinksUiEvent.OnThemeClick -> {
-                launchAndEmit(LinksUiAction.Navigate(ThemeSettingsRoute))
-            }
-
-            LinksUiEvent.OnDeleteAllClick -> {
-                launchAndEmit(LinksUiAction.Navigate(DeleteAllRoute))
-            }
-
             is LinksUiEvent.OnDeleteLink -> viewModelScope.launch {
                 deleteLink(event.id)
                 updateLinkById(event.id) { it.copy(isMenuExpanded = false) }

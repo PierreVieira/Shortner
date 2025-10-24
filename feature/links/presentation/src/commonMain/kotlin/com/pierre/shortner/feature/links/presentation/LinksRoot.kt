@@ -1,4 +1,4 @@
-package com.pierre.shortner.feature.links.presentation.root
+package com.pierre.shortner.feature.links.presentation
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.collectAsState
@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.pierre.shortner.feature.links.presentation.model.action.LinksUiAction
 import com.pierre.shortner.feature.links.presentation.screen.LinksScreen
 import com.pierre.shortner.feature.links.presentation.viewmodel.LinksViewModel
+import com.pierre.shortner.feature.links.top_bar.ShortenerTopAppBarRoot
 import com.pierre.shortner.model.routes.LinksRoute
 import com.pierre.shortner.ui.utils.ActionCollector
 import org.jetbrains.compose.resources.getString
@@ -21,7 +22,7 @@ fun NavGraphBuilder.links(
     composable<LinksRoute> {
         val viewModel = koinViewModel<LinksViewModel>()
         val uiState by viewModel.uiState.collectAsState()
-        val snackbarHostState = remember { SnackbarHostState() }
+        val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 
         ActionCollector(viewModel.uiActions) { action ->
             when (action) {
@@ -35,6 +36,9 @@ fun NavGraphBuilder.links(
             snackbarHostState = snackbarHostState,
             uiState = uiState,
             onEvent = viewModel::onEvent,
+            topBar = {
+                ShortenerTopAppBarRoot(navController, snackbarHostState)
+            }
         )
     }
 }

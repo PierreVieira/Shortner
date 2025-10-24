@@ -3,8 +3,11 @@ package com.pierre.shortner.core.koin_initializer.di
 import com.pierre.shortner.core.data_store_provider.di.dataStoreProviderModule
 import com.pierre.shortner.core.room_provider.di.roomModule
 import com.pierre.shortner.feature.links.data.di.linksDataModule
+import com.pierre.shortner.feature.links.delete_all.di.deleteAllLinksDataModule
+import com.pierre.shortner.feature.links.delete_all.presentation.di.deleteAllLinksPresentationModule
 import com.pierre.shortner.feature.links.domain.di.linksDomainModule
 import com.pierre.shortner.feature.links.presentation.di.linksPresentationModule
+import com.pierre.shortner.feature.links.top_bar.di.shortenerTopBarModule
 import com.pierre.shortner.feature.theme_selection.data.di.themeSelectionDataModule
 import com.pierre.shortner.feature.theme_selection.di.themeSelectionPresentationModule
 import com.pierre.shortner.feature.theme_selection.domain.di.themeSelectionDomainModule
@@ -25,9 +28,12 @@ fun commonKoinInitializer(
             networkModule,
         )
         val featureModules = listOf(
+            deleteAllLinksDataModule,
+            deleteAllLinksPresentationModule,
             linksDataModule,
             linksDomainModule,
             linksPresentationModule,
+            shortenerTopBarModule,
             themeSelectionDataModule,
             themeSelectionDomainModule,
             themeSelectionPresentationModule,
