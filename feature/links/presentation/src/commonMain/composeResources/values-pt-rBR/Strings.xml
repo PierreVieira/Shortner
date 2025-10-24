@@ -7,7 +7,7 @@
     <string name="theme_button">Tema</string>
     <string name="no_links_message">Nenhum link encurtado ainda. Encurte um link para começar!</string>
     <string name="invalid_url_error">Por favor, digite uma URL válida</string>
-    <string name="empty_url_error">Por favor, digite uma URL</string>
+    <string name="empty_url_error">A URL não pode estar vazia</string>
     <string name="shorten_url_error">Falha ao encurtar URL. Tente novamente.</string>
     <string name="delete_confirmation_title">Excluir Todos os Links</string>
     <string name="delete_confirmation_message">Tem certeza de que deseja excluir todos os links encurtados? Esta ação não pode ser desfeita.</string>
@@ -16,4 +16,5 @@
     <string name="original_link_label">Link Original</string>
     <string name="shortened_link_label">Link Encurtado</string>
     <string name="delete_link_button">Excluir</string>
+    <string name="alias">Identificador</string>
 </resources>

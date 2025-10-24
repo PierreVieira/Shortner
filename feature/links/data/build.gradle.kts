@@ -41,6 +41,9 @@ kotlin {
 
             // Feature
             implementation(projects.feature.links.domain)
+
+            // Kotlin Serialization
+            implementation(libs.kotlinSerializationJson)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

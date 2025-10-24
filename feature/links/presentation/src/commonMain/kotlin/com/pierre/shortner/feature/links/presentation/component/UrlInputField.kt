@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.pierre.shortner.feature.links.presentation.model.event.LinksUiEvent
 import com.pierre.shortner.model.theme.Theme
 import com.pierre.shortner.ui.theme.preview.AllThemePreferencesPreviewParameterProvider
 import com.pierre.shortner.ui.theme.preview.PreviewTheme
@@ -32,8 +33,7 @@ import shortener.feature.links.presentation.generated.resources.shorten_button
 fun UrlInputField(
     urlText: String,
     isLoading: Boolean,
-    onUrlTextChange: (String) -> Unit,
-    onShortenClick: () -> Unit,
+    onEvent: (LinksUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -49,7 +49,9 @@ fun UrlInputField(
         ) {
             OutlinedTextField(
                 value = urlText,
-                onValueChange = onUrlTextChange,
+                onValueChange = {
+                    onEvent(LinksUiEvent.OnUrlTextChange(it))
+                },
                 placeholder = { Text(stringResource(Res.string.enter_url_hint)) },
                 modifier = Modifier.weight(1f),
                 enabled = !isLoading
@@ -60,14 +62,17 @@ fun UrlInputField(
                     modifier = Modifier.padding(8.dp)
                 )
             } else {
+                val isSendButtonEnabled = urlText.isNotBlank()
                 IconButton(
-                    onClick = onShortenClick,
-                    enabled = urlText.isNotBlank()
+                    onClick = {
+                        onEvent(LinksUiEvent.OnShortenUrlClick)
+                    },
+                    enabled = isSendButtonEnabled
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Send,
+                        imageVector = Icons.AutoMirrored.Filled.Send,
                         contentDescription = stringResource(Res.string.shorten_button),
-                        tint = if (urlText.isNotBlank()) {
+                        tint = if (isSendButtonEnabled) {
                             MaterialTheme.colorScheme.primary
                         } else {
                             MaterialTheme.colorScheme.onSurfaceVariant
@@ -89,8 +94,7 @@ private fun UrlInputFieldPreview(
         UrlInputField(
             urlText = "https://www.example.com",
             isLoading = false,
-            onUrlTextChange = {},
-            onShortenClick = {}
+            onEvent = {}
         )
     }
 }

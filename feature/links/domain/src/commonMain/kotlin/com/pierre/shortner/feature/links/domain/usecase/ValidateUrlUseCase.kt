@@ -1,11 +1,13 @@
 package com.pierre.shortner.feature.links.domain.usecase
 
+import com.pierre.shortner.feature.links.domain.model.UrlValidationException
+
 class ValidateUrlUseCase {
-    operator fun invoke(url: String): ValidationResult {
-        return when {
-            url.isBlank() -> ValidationResult.Empty
-            !isValidUrl(url) -> ValidationResult.Invalid
-            else -> ValidationResult.Valid
+    operator fun invoke(url: String): Result<Unit> = runCatching {
+        when {
+            url.isBlank() -> throw UrlValidationException.Empty()
+            !isValidUrl(url) -> throw UrlValidationException.Invalid()
+            else -> Unit
         }
     }
     
@@ -15,10 +17,4 @@ class ValidateUrlUseCase {
     } catch (_: Exception) {
         false
     }
-}
-
-sealed interface ValidationResult {
-    data object Valid : ValidationResult
-    data object Empty : ValidationResult
-    data object Invalid : ValidationResult
 }

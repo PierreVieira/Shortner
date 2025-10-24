@@ -1,7 +1,7 @@
 package com.pierre.shortner.feature.links.data.datasource
 
-import com.pierre.shortner.feature.links.data.model.ShortenUrlResponse
+import com.pierre.shortner.feature.links.data.dto.ShortenUrlDto
 
 interface LinksRemoteDataSource {
-    suspend fun shortenUrl(url: String): Result<ShortenUrlResponse>
+    suspend fun postUrl(url: String): Result<ShortenUrlDto>
 }

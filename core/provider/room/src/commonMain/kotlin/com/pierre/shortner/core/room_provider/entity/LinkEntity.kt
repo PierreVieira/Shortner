@@ -12,4 +12,5 @@ data class LinkEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val shortedLink: String,
     val originalLink: String,
+    val alias: String,
 )

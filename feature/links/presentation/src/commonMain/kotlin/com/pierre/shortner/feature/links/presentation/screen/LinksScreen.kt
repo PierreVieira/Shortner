@@ -1,4 +1,4 @@
-package com.pierre.shortner.feature.links.presentation
+package com.pierre.shortner.feature.links.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,11 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.pierre.shortner.feature.links.presentation.component.DeleteConfirmationDialog
+import com.pierre.shortner.feature.links.domain.model.Link
 import com.pierre.shortner.feature.links.presentation.component.LinkCard
 import com.pierre.shortner.feature.links.presentation.component.UrlInputField
-import com.pierre.shortner.feature.links.presentation.model.LinksUiEvent
-import com.pierre.shortner.feature.links.presentation.model.LinksUiState
+import com.pierre.shortner.feature.links.presentation.model.event.LinksUiEvent
+import com.pierre.shortner.feature.links.presentation.model.state.LinksUiState
 import com.pierre.shortner.ui.components.icon_button.CommonIconButton
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -71,16 +71,13 @@ fun LinksScreen(
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            // URL Input Field
             UrlInputField(
+                modifier = Modifier.padding(bottom = 16.dp),
                 urlText = uiState.urlText,
                 isLoading = uiState.isLoading,
-                onUrlTextChange = { onEvent(LinksUiEvent.OnUrlTextChange(it)) },
-                onShortenClick = { onEvent(LinksUiEvent.OnShortenUrl(uiState.urlText)) },
-                modifier = Modifier.padding(bottom = 16.dp)
+                onEvent = onEvent
             )
 
-            // Links List or Empty State
             if (uiState.links.isEmpty()) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -107,14 +104,6 @@ fun LinksScreen(
                 }
             }
         }
-
-        // Delete All Confirmation Dialog
-        if (uiState.showDeleteConfirmation) {
-            DeleteConfirmationDialog(
-                onConfirm = { onEvent(LinksUiEvent.OnDeleteAllConfirm) },
-                onDismiss = { onEvent(LinksUiEvent.OnDeleteAllCancel) }
-            )
-        }
     }
 }
 
@@ -124,13 +113,15 @@ private fun LinksScreenPreview() {
     LinksScreen(
         uiState = LinksUiState(
             links = listOf(
-                com.pierre.shortner.feature.links.domain.model.Link(
+                Link(
                     id = 1,
                     originalUrl = "https://www.example.com/very/long/url",
                     shortenedUrl = "https://short.ly/abc123",
                     alias = "abc123"
                 )
-            )
+            ),
+            isLoading = false,
+            urlText = "",
         ),
         snackbarHostState = remember { SnackbarHostState() },
         onEvent = {}

@@ -7,7 +7,5 @@ import kotlinx.coroutines.flow.Flow
 class GetAllLinksUseCase(
     private val repository: LinksRepository
 ) {
-    operator fun invoke(): Flow<List<Link>> {
-        return repository.getAllLinks()
-    }
+    operator fun invoke(): Flow<List<Link>> = repository.getAllLinks()
 }

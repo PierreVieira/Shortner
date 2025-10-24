@@ -1,4 +1,4 @@
-package com.pierre.shortner.feature.links.presentation
+package com.pierre.shortner.feature.links.presentation.root
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.collectAsState
@@ -7,10 +7,12 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.pierre.shortner.feature.links.presentation.model.LinksUiAction
+import com.pierre.shortner.feature.links.presentation.model.action.LinksUiAction
+import com.pierre.shortner.feature.links.presentation.screen.LinksScreen
+import com.pierre.shortner.feature.links.presentation.viewmodel.LinksViewModel
 import com.pierre.shortner.model.routes.LinksRoute
-import com.pierre.shortner.model.routes.theme.ThemeSettingsRoute
 import com.pierre.shortner.ui.utils.ActionCollector
+import org.jetbrains.compose.resources.getString
 import org.koin.compose.viewmodel.koinViewModel
 
 fun NavGraphBuilder.links(
@@ -19,12 +21,13 @@ fun NavGraphBuilder.links(
     composable<LinksRoute> {
         val viewModel = koinViewModel<LinksViewModel>()
         val uiState by viewModel.uiState.collectAsState()
-        val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+        val snackbarHostState = remember { SnackbarHostState() }
 
         ActionCollector(viewModel.uiActions) { action ->
             when (action) {
-                is LinksUiAction.ShowSnackbar -> snackbarHostState.showSnackbar(action.message)
-                LinksUiAction.NavigateToTheme -> navController.navigate(ThemeSettingsRoute)
+                is LinksUiAction.ShowSnackbar -> snackbarHostState
+                    .showSnackbar(getString(action.resourceId))
+                is LinksUiAction.Navigate -> navController.navigate(action.route)
             }
         }
 

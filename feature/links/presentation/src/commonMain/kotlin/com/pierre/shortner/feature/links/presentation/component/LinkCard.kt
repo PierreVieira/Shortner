@@ -20,9 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.pierre.shortner.feature.links.domain.model.Link
+import com.pierre.shortner.ui.components.icon_button.CommonIconButton
+import com.pierre.shortner.ui.components.spacer.HorizontalSpacer
+import com.pierre.shortner.ui.components.spacer.VerticalSpacer
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import shortener.feature.links.presentation.generated.resources.Res
+import shortener.feature.links.presentation.generated.resources.alias
 import shortener.feature.links.presentation.generated.resources.delete_link_button
 import shortener.feature.links.presentation.generated.resources.original_link_label
 import shortener.feature.links.presentation.generated.resources.shortened_link_label
@@ -59,9 +63,8 @@ fun LinkCard(
                         style = MaterialTheme.typography.bodyMedium,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(bottom = 8.dp)
                     )
-                    
+                    VerticalSpacer(8)
                     Text(
                         text = stringResource(Res.string.shortened_link_label),
                         style = MaterialTheme.typography.labelMedium,
@@ -71,21 +74,29 @@ fun LinkCard(
                     Text(
                         text = link.shortenedUrl,
                         style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    VerticalSpacer(8)
+                    Text(
+                        text = stringResource(Res.string.alias),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = link.alias,
+                        style = MaterialTheme.typography.bodyMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-                
-                IconButton(
+                HorizontalSpacer(8)
+                CommonIconButton(
                     onClick = onDeleteClick,
-                    modifier = Modifier.padding(start = 8.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = stringResource(Res.string.delete_link_button),
-                        tint = MaterialTheme.colorScheme.error
-                    )
-                }
+                    imageVector = Icons.Default.Close,
+                    contentDescription = stringResource(Res.string.delete_link_button),
+                )
             }
         }
     }
