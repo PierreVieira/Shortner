@@ -1,6 +1,7 @@
 package com.pierre.shortner.feature.links.presentation.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
@@ -23,8 +23,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -86,13 +88,20 @@ fun LinkCard(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Collapse/Expand arrow indicator
+                    // Collapse/Expand arrow indicator with rotation animation
+                    val rotationAngle by animateFloatAsState(
+                        targetValue = if (linkPresentationModel.isCardExpanded) 180f else 0f,
+                        animationSpec = tween(300),
+                        label = "arrow_rotation"
+                    )
+                    
                     IconButton(
                         onClick = { onEvent(LinksUiEvent.OnToggleCardCollapse(linkPresentationModel.id)) }
                     ) {
                         Icon(
-                            imageVector = if (linkPresentationModel.isCardExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                            contentDescription = if (linkPresentationModel.isCardExpanded) "Collapse" else "Expand"
+                            imageVector = Icons.Default.ExpandMore,
+                            contentDescription = if (linkPresentationModel.isCardExpanded) "Collapse" else "Expand",
+                            modifier = Modifier.rotate(rotationAngle)
                         )
                     }
                     
