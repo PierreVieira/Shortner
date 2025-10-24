@@ -40,6 +40,9 @@ kotlin {
             // Navigation
             implementation(libs.navigation.compose)
 
+            // DateTime
+            implementation(libs.kotlinx.datetime)
+
             // Core
             implementation(projects.core.model.routes)
             implementation(projects.core.utils)

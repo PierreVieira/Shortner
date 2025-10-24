@@ -25,6 +25,9 @@ kotlin {
             // Coroutines
             implementation(libs.kotlinx.coroutines.core)
 
+            // DateTime
+            implementation(libs.kotlinx.datetime)
+
             // Koin
             implementation(project.dependencies.platform(libs.koinBom))
             implementation(libs.koinCore)
@@ -33,7 +36,6 @@ kotlin {
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
         }
-
     }
 }
 

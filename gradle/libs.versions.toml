@@ -11,6 +11,7 @@ kotlinSerializationJson = "1.9.0"
 kotlin = "2.2.20"
 kotlinxCoroutinesCore = "1.10.2"
 kotlinx-coroutines = "1.10.2"
+kotlinx-datetime = "0.6.1"
 navigationCompose = "2.9.1"
 koinVersion = "4.1.1"
 kotzillaPlugin = "1.2.3"
@@ -51,6 +52,9 @@ dataStore-preferences = { module = "androidx.datastore:datastore-preferences", v
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+
+# DateTime
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
 # Serialiazation
 kotlinSerializationJson = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerializationJson" }

@@ -13,4 +13,5 @@ data class LinkEntity(
     val shortedLink: String,
     val originalLink: String,
     val alias: String,
+    val createdAt: Long,
 )

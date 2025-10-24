@@ -2,11 +2,14 @@ package com.pierre.shortner.feature.links.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pierre.shortner.core.utils.toFormattedString
+import com.pierre.shortner.feature.links.domain.model.Link
 import com.pierre.shortner.feature.links.domain.model.UrlValidationException
 import com.pierre.shortner.feature.links.domain.usecase.DeleteLinkUseCase
 import com.pierre.shortner.feature.links.domain.usecase.GetAllLinksUseCase
 import com.pierre.shortner.feature.links.domain.usecase.ShortenUrlUseCase
 import com.pierre.shortner.feature.links.domain.usecase.ValidateUrlUseCase
+import com.pierre.shortner.feature.links.presentation.model.LinkPresentationModel
 import com.pierre.shortner.feature.links.presentation.model.action.LinksUiAction
 import com.pierre.shortner.feature.links.presentation.model.event.LinksUiEvent
 import com.pierre.shortner.feature.links.presentation.model.state.LinksUiState
@@ -36,7 +39,6 @@ class LinksViewModel(
             links = emptyList(),
             isLoading = false,
             urlText = "",
-            expandedMenuLinkId = null,
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -46,39 +48,61 @@ class LinksViewModel(
 
     init {
         observe(getAllLinks()) { links ->
-            _uiState.update { it.copy(links = links) }
+            val linkPresentationModels = links.map { link ->
+                link.toPresentationModel()
+            }
+            _uiState.update { it.copy(links = linkPresentationModels) }
         }
     }
+
+    private fun Link.toPresentationModel(): LinkPresentationModel = LinkPresentationModel(
+        id = id,
+        originalUrl = originalUrl,
+        shortenedUrl = shortenedUrl,
+        alias = alias,
+        createdAt = createdAt.toFormattedString(),
+        isCardExpanded = false,
+        isMenuExpanded = false
+    )
+
 
     fun onEvent(event: LinksUiEvent) {
         when (event) {
             LinksUiEvent.OnThemeClick -> {
-                viewModelScope.launch {
-                    _uiActions.emit(LinksUiAction.Navigate(ThemeSettingsRoute))
-                }
+                launchAndEmit(LinksUiAction.Navigate(ThemeSettingsRoute))
             }
 
-            LinksUiEvent.OnDeleteAllClick -> viewModelScope.launch {
-                _uiActions.emit(LinksUiAction.Navigate(DeleteAllRoute))
+            LinksUiEvent.OnDeleteAllClick -> {
+                launchAndEmit(LinksUiAction.Navigate(DeleteAllRoute))
             }
 
             is LinksUiEvent.OnDeleteLink -> viewModelScope.launch {
                 deleteLink(event.id)
-                _uiState.update { it.copy(expandedMenuLinkId = null) }
+                updateLinkById(event.id) { it.copy(isMenuExpanded = false) }
             }
 
             is LinksUiEvent.OnCopyLink -> {
                 // TODO: Implement copy to clipboard functionality
                 // For now, this is a placeholder that does nothing
-                _uiState.update { it.copy(expandedMenuLinkId = null) }
+                updateLinkById(event.id) { it.copy(isMenuExpanded = false) }
             }
 
             is LinksUiEvent.OnMenuClick -> {
-                _uiState.update { it.copy(expandedMenuLinkId = event.linkId) }
+                updateAllLinks { linkModel ->
+                    if (linkModel.id == event.linkId) {
+                        linkModel.copy(isMenuExpanded = true)
+                    } else {
+                        linkModel.copy(isMenuExpanded = false)
+                    }
+                }
             }
 
             LinksUiEvent.OnMenuDismiss -> {
-                _uiState.update { it.copy(expandedMenuLinkId = null) }
+                updateAllLinks { it.copy(isMenuExpanded = false) }
+            }
+
+            is LinksUiEvent.OnToggleCardCollapse -> {
+                updateLinkById(event.linkId) { it.copy(isCardExpanded = !it.isCardExpanded) }
             }
 
             is LinksUiEvent.OnShortenUrlClick -> shortenUrl()
@@ -90,35 +114,69 @@ class LinksViewModel(
     private fun updateUrlText(text: String) {
         _uiState.update { it.copy(urlText = text) }
     }
-
+    
+    private fun launchAndEmit(action: LinksUiAction) {
+        viewModelScope.launch {
+            _uiActions.emit(action)
+        }
+    }
+    
+    private fun updateLinkById(linkId: Long, transform: (LinkPresentationModel) -> LinkPresentationModel) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                links = currentState.links.map { linkModel ->
+                    if (linkModel.id == linkId) {
+                        transform(linkModel)
+                    } else {
+                        linkModel
+                    }
+                }
+            )
+        }
+    }
+    
+    private fun updateAllLinks(transform: (LinkPresentationModel) -> LinkPresentationModel) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                links = currentState.links.map(transform)
+            )
+        }
+    }
+    
     private fun shortenUrl() {
         val url = uiState.value.urlText.trim()
         validateUrl(url)
             .onSuccess {
-                _uiState.update { it.copy(isLoading = true) }
+                setLoadingState(true)
                 viewModelScope.launch {
                     postUrlToShort(url)
                         .onSuccess {
-                            _uiState.value = _uiState.value.copy(
-                                isLoading = false,
-                                urlText = "",
-                            )
+                            setLoadingState(false)
+                            updateUrlText("")
                         }
                         .onFailure {
-                            _uiState.update { it.copy(isLoading = false) }
+                            setLoadingState(false)
                             _uiActions.emit(LinksUiAction.ShowSnackbar(Res.string.shorten_url_error))
                         }
                 }
             }.onFailure { failure ->
-                viewModelScope.launch {
-                    if (failure is UrlValidationException) {
-                        val message = when (failure) {
-                            is UrlValidationException.Empty -> Res.string.empty_url_error
-                            is UrlValidationException.Invalid -> Res.string.invalid_url_error
-                        }
-                        _uiActions.emit(LinksUiAction.ShowSnackbar(message))
-                    }
-                }
+                launchAndEmit(getValidationErrorMessage(failure))
             }
+    }
+    
+    private fun setLoadingState(isLoading: Boolean) {
+        _uiState.update { it.copy(isLoading = isLoading) }
+    }
+    
+    private fun getValidationErrorMessage(failure: Throwable): LinksUiAction {
+        return if (failure is UrlValidationException) {
+            val message = when (failure) {
+                is UrlValidationException.Empty -> Res.string.empty_url_error
+                is UrlValidationException.Invalid -> Res.string.invalid_url_error
+            }
+            LinksUiAction.ShowSnackbar(message)
+        } else {
+            LinksUiAction.ShowSnackbar(Res.string.shorten_url_error)
+        }
     }
 }

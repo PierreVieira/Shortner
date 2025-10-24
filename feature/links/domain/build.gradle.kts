@@ -28,6 +28,9 @@ kotlin {
             // Coroutines
             implementation(libs.kotlinx.coroutines.core)
 
+            // DateTime
+            implementation(libs.kotlinx.datetime)
+
             // Core
             implementation(projects.core.utils)
         }

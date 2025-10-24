@@ -9,4 +9,5 @@ sealed interface LinksUiEvent {
     data class OnUrlTextChange(val text: String) : LinksUiEvent
     data class OnMenuClick(val linkId: Long) : LinksUiEvent
     data object OnMenuDismiss : LinksUiEvent
+    data class OnToggleCardCollapse(val linkId: Long) : LinksUiEvent
 }
