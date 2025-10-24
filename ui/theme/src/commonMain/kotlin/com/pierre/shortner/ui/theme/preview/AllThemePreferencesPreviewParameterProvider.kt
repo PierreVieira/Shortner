@@ -4,5 +4,5 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import com.pierre.shortner.model.theme.Theme
 
 class AllThemePreferencesPreviewParameterProvider: PreviewParameterProvider<Theme> {
-    override val values: Sequence<Theme> = sequenceOf(Theme.LIGHT, Theme.DARK)
+    override val values: Sequence<Theme> = Theme.entries.asSequence()
 }

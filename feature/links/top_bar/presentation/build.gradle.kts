@@ -14,7 +14,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "LinksPresentation"
+            baseName = "TopBarPresentation"
             isStatic = true
         }
     }
@@ -27,9 +27,9 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
-            implementation(compose.materialIconsExtended)
             implementation(compose.components.uiToolingPreview)
 
             // Koin (feature DI)
@@ -49,15 +49,11 @@ kotlin {
 
             // UI
             implementation(projects.ui.theme)
-            implementation(projects.ui.components.deleteDialog)
-            implementation(projects.ui.components.spacer)
             implementation(projects.ui.components.iconButton)
             implementation(projects.ui.utils)
 
             // Features
-            implementation(projects.feature.links.domain)
-            implementation(projects.feature.links.deleteAll.presentation)
-            implementation(projects.feature.links.topBar.presentation)
+            implementation(projects.feature.links.topBar.domain)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -70,9 +66,8 @@ dependencies {
     debugImplementation(libs.uiTooling)
 }
 
-
 android {
-    namespace = "com.pierre.shortner.feature.links.presentation"
+    namespace = "com.pierre.shortner.feature.links.top_bar.presentation"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

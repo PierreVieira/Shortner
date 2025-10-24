@@ -7,10 +7,12 @@ import com.pierre.shortner.feature.links.delete_all.di.deleteAllLinksDataModule
 import com.pierre.shortner.feature.links.delete_all.presentation.di.deleteAllLinksPresentationModule
 import com.pierre.shortner.feature.links.domain.di.linksDomainModule
 import com.pierre.shortner.feature.links.presentation.di.linksPresentationModule
-import com.pierre.shortner.feature.links.top_bar.di.shortenerTopBarModule
+import com.pierre.shortner.feature.links.top_bar.data.di.shortenerTopBarDataModule
+import com.pierre.shortner.feature.links.top_bar.domain.di.shortenerTopBarDomainModule
 import com.pierre.shortner.feature.theme_selection.data.di.themeSelectionDataModule
 import com.pierre.shortner.feature.theme_selection.di.themeSelectionPresentationModule
 import com.pierre.shortner.feature.theme_selection.domain.di.themeSelectionDomainModule
+import com.pierre.shortner.feature.links.top_bar.presentation.di.shortenerTopBarPresentationModule
 import com.pierre.shortner.network.di.networkModule
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
@@ -33,7 +35,9 @@ fun commonKoinInitializer(
             linksDataModule,
             linksDomainModule,
             linksPresentationModule,
-            shortenerTopBarModule,
+            shortenerTopBarDataModule,
+            shortenerTopBarDomainModule,
+            shortenerTopBarPresentationModule,
             themeSelectionDataModule,
             themeSelectionDomainModule,
             themeSelectionPresentationModule,
