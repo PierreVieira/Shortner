@@ -39,9 +39,8 @@ fun NavGraphBuilder.links(
             uiState = uiState,
             onEvent = viewModel::onEvent,
             topBar = { ShortenerTopAppBarRoot(navController, snackbarHostState) },
-            inputField = { modifier ->
+            inputField = {
                 UrlInputFieldRoot(
-                    modifier = modifier,
                     snackbarHostState = snackbarHostState
                 )
             }

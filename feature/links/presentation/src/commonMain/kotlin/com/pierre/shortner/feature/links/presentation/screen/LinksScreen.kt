@@ -32,6 +32,7 @@ import com.pierre.shortner.feature.links.presentation.component.LinkCard
 import com.pierre.shortner.feature.links.presentation.model.LinkPresentationModel
 import com.pierre.shortner.feature.links.presentation.model.event.LinksUiEvent
 import com.pierre.shortner.feature.links.presentation.model.state.LinksUiState
+import com.pierre.shortner.ui.components.spacer.VerticalSpacer
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import shortener.feature.links.presentation.generated.resources.Res
@@ -44,7 +45,7 @@ fun LinksScreen(
     snackbarHostState: SnackbarHostState,
     onEvent: (LinksUiEvent) -> Unit,
     topBar: @Composable () -> Unit,
-    inputField: @Composable (Modifier) -> Unit,
+    inputField: @Composable () -> Unit,
 ) {
     Scaffold(
         topBar = topBar,
@@ -57,8 +58,8 @@ fun LinksScreen(
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            inputField(Modifier.padding(bottom = 16.dp),)
-
+            inputField()
+            VerticalSpacer()
             AnimatedContent(
                 targetState = uiState.links.isEmpty(),
                 transitionSpec = {
