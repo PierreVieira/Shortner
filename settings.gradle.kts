@@ -45,6 +45,7 @@ include(":core:provider:room")
 include(":core:utils")
 
 // UI
+include(":ui:components:delete_dialog")
 include(":ui:components:icon_button")
 include(":ui:components:shimmer")
 include(":ui:components:spacer")

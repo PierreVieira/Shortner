@@ -98,7 +98,8 @@ fun LinksScreen(
                     items(uiState.links) { link ->
                         LinkCard(
                             link = link,
-                            onDeleteClick = { onEvent(LinksUiEvent.OnDeleteLink(link.id)) }
+                            isMenuExpanded = uiState.expandedMenuLinkId == link.id,
+                            onEvent = onEvent
                         )
                     }
                 }

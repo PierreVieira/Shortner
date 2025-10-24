@@ -6,4 +6,5 @@ data class LinksUiState(
     val links: List<Link>,
     val isLoading: Boolean,
     val urlText: String,
+    val expandedMenuLinkId: Long? = null,
 )

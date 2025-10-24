@@ -36,6 +36,7 @@ class LinksViewModel(
             links = emptyList(),
             isLoading = false,
             urlText = "",
+            expandedMenuLinkId = null,
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -63,10 +64,24 @@ class LinksViewModel(
 
             is LinksUiEvent.OnDeleteLink -> viewModelScope.launch {
                 deleteLink(event.id)
+                _uiState.update { it.copy(expandedMenuLinkId = null) }
+            }
+
+            is LinksUiEvent.OnCopyLink -> {
+                // TODO: Implement copy to clipboard functionality
+                // For now, this is a placeholder that does nothing
+                _uiState.update { it.copy(expandedMenuLinkId = null) }
+            }
+
+            is LinksUiEvent.OnMenuClick -> {
+                _uiState.update { it.copy(expandedMenuLinkId = event.linkId) }
+            }
+
+            LinksUiEvent.OnMenuDismiss -> {
+                _uiState.update { it.copy(expandedMenuLinkId = null) }
             }
 
             is LinksUiEvent.OnShortenUrlClick -> shortenUrl()
-
 
             is LinksUiEvent.OnUrlTextChange -> updateUrlText(event.text)
         }

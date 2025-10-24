@@ -3,10 +3,10 @@ package com.pierre.shortner.feature.links.presentation.root
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.dialog
-import com.pierre.shortner.feature.links.presentation.component.DeleteConfirmationDialog
 import com.pierre.shortner.feature.links.presentation.model.event.DeleteAllLinksUiEvent
 import com.pierre.shortner.feature.links.presentation.viewmodel.DeleteAllLinksViewModel
 import com.pierre.shortner.model.routes.DeleteAllRoute
+import com.pierre.shortner.ui.components.delete_dialog.DeleteConfirmationDialog
 import com.pierre.shortner.ui.utils.ActionCollector
 import org.koin.compose.viewmodel.koinViewModel
 import shortener.feature.links.presentation.generated.resources.Res

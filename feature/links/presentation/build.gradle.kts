@@ -46,6 +46,7 @@ kotlin {
 
             // UI
             implementation(projects.ui.theme)
+            implementation(projects.ui.components.deleteDialog)
             implementation(projects.ui.components.spacer)
             implementation(projects.ui.components.iconButton)
             implementation(projects.ui.utils)

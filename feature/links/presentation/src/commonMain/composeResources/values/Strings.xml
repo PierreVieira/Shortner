@@ -17,4 +17,7 @@
     <string name="shortened_link_label">Shortened Link</string>
     <string name="delete_link_button">Delete</string>
     <string name="alias">Alias</string>
+    <string name="more_options">More options</string>
+    <string name="copy">Copy</string>
+    <string name="remove">Remove</string>
 </resources>
