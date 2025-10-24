@@ -5,3 +5,4 @@ import androidx.room.RoomDatabaseConstructor
 expect object DatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     override fun initialize(): AppDatabase
 }
+

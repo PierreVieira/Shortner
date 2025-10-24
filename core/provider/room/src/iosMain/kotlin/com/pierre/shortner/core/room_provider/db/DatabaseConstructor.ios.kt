@@ -26,3 +26,4 @@ private fun getDocumentDirectory(): String {
     )
     return requireNotNull(documentDirectory?.path)
 }
+
