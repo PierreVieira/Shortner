@@ -80,7 +80,7 @@ fun LinksScreen(
             UrlInputField(
                 modifier = Modifier.padding(bottom = 16.dp),
                 urlText = uiState.urlText,
-                isLoading = uiState.isLoading,
+                isLoading = uiState.isSendButtonLoading,
                 onEvent = onEvent
             )
 
@@ -141,7 +141,7 @@ private fun LinksScreenPreview() {
                     isMenuExpanded = false
                 )
             ),
-            isLoading = false,
+            isSendButtonLoading = false,
             urlText = "",
         ),
         snackbarHostState = remember { SnackbarHostState() },

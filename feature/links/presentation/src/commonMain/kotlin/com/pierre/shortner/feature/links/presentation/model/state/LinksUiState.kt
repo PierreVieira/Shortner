@@ -4,6 +4,6 @@ import com.pierre.shortner.feature.links.presentation.model.LinkPresentationMode
 
 data class LinksUiState(
     val links: List<LinkPresentationModel>,
-    val isLoading: Boolean,
+    val isSendButtonLoading: Boolean,
     val urlText: String,
 )

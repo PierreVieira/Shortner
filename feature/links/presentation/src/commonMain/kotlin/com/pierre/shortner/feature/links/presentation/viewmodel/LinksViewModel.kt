@@ -37,7 +37,7 @@ class LinksViewModel(
     private val _uiState = MutableStateFlow(
         LinksUiState(
             links = emptyList(),
-            isLoading = false,
+            isSendButtonLoading = false,
             urlText = "",
         )
     )
@@ -165,7 +165,7 @@ class LinksViewModel(
     }
     
     private fun setLoadingState(isLoading: Boolean) {
-        _uiState.update { it.copy(isLoading = isLoading) }
+        _uiState.update { it.copy(isSendButtonLoading = isLoading) }
     }
     
     private fun getValidationErrorMessage(failure: Throwable): LinksUiAction {

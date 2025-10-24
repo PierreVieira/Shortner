@@ -9,8 +9,6 @@ import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pierre.shortner.feature.links.presentation.model.event.LinksUiEvent
 import com.pierre.shortner.model.theme.Theme
+import com.pierre.shortner.ui.components.icon_button.CommonIconButton
 import com.pierre.shortner.ui.theme.preview.AllThemePreferencesPreviewParameterProvider
 import com.pierre.shortner.ui.theme.preview.PreviewTheme
 import org.jetbrains.compose.resources.stringResource
@@ -63,22 +62,19 @@ fun UrlInputField(
                 )
             } else {
                 val isSendButtonEnabled = urlText.isNotBlank()
-                IconButton(
+                CommonIconButton(
                     onClick = {
                         onEvent(LinksUiEvent.OnShortenUrlClick)
                     },
-                    enabled = isSendButtonEnabled
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.Send,
-                        contentDescription = stringResource(Res.string.shorten_button),
-                        tint = if (isSendButtonEnabled) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        }
-                    )
-                }
+                    isEnabled = isSendButtonEnabled,
+                    imageVector = Icons.AutoMirrored.Filled.Send,
+                    contentDescription = stringResource(Res.string.shorten_button),
+                    tint = if (isSendButtonEnabled) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    }
+                )
             }
         }
     }

@@ -37,9 +37,11 @@ fun CommonIconButton(
     imageVector: ImageVector,
     contentDescription: String,
     tint: Color = LocalContentColor.current,
+    isEnabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     IconButton(
+        enabled = isEnabled,
         modifier = modifier,
         onClick = onClick,
     ) {
