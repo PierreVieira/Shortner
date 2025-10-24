@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="links_screen_title">Links</string>
+    <string name="links_screen_title">Shortener</string>
     <string name="enter_url_hint">Enter URL to shorten</string>
     <string name="shorten_button">Shorten</string>
     <string name="delete_all_button">Delete All</string>
