@@ -6,6 +6,6 @@ data class LinkPresentationModel(
     val shortenedUrl: String,
     val alias: String,
     val createdAt: String,
-    val isCardExpanded: Boolean = false,
-    val isMenuExpanded: Boolean = false,
+    val isCardExpanded: Boolean,
+    val isMenuExpanded: Boolean,
 )

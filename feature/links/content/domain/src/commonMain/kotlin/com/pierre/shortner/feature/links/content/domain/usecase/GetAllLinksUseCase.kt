@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 class GetAllLinksUseCase(
     private val repository: LinksRepository
-) {
-    operator fun invoke(): Flow<List<LinkDomainModel>> = repository.getAllLinks()
+) : GetAllLinks {
+    override operator fun invoke(): Flow<List<LinkDomainModel>> = repository.getAllLinks()
 }

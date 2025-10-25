@@ -2,9 +2,8 @@ package com.pierre.shortner.feature.links.content.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pierre.shortner.core.utils.toFormattedString
-import com.pierre.shortner.feature.links.content.domain.model.LinkDomainModel
-import com.pierre.shortner.feature.links.content.domain.usecase.GetAllLinksUseCase
+import com.pierre.shortner.feature.links.content.domain.usecase.GetAllLinks
+import com.pierre.shortner.feature.links.content.presentation.mapper.LinkModelMapper
 import com.pierre.shortner.feature.links.content.presentation.model.LinkPresentationModel
 import com.pierre.shortner.feature.links.content.presentation.model.action.LinksUiAction
 import com.pierre.shortner.feature.links.content.presentation.model.event.LinksUiEvent
@@ -18,12 +17,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
-import shortener.feature.links.content.presentation.generated.resources.Res
-import shortener.feature.links.content.presentation.generated.resources.at
 
 class LinksContentViewModel(
-    getAllLinks: GetAllLinksUseCase,
+    getAllLinks: GetAllLinks,
+    private val linkModelMapper: LinkModelMapper,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -42,26 +39,14 @@ class LinksContentViewModel(
 
     init {
         observe(getAllLinks()) { links ->
-            val linkPresentationModels = links.map { link ->
-                link.toPresentationModel()
+            val linkPresentationModels = links.map {
+                linkModelMapper.toPresentation(it)
             }
             _uiState.update {
                 it.copy(links = LinkListUiState.Loaded(linkPresentationModels))
             }
         }
     }
-
-    private suspend fun LinkDomainModel.toPresentationModel(): LinkPresentationModel =
-        LinkPresentationModel(
-            id = id,
-            originalUrl = originalUrl,
-            shortenedUrl = shortenedUrl,
-            alias = alias,
-            createdAt = createdAt.toFormattedString(getString(Res.string.at)),
-            isCardExpanded = false,
-            isMenuExpanded = false
-        )
-
 
     fun onEvent(event: LinksUiEvent) {
         when (event) {
