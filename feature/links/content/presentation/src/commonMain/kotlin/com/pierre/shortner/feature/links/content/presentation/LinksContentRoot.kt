@@ -5,6 +5,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.navigation.NavController
 import com.pierre.shortner.feature.links.content.presentation.component.LoadedLinksContent
 import com.pierre.shortner.feature.links.content.presentation.model.action.LinksUiAction
@@ -57,6 +59,7 @@ private fun LinksContentActionCollector(
     snackbarHostState: SnackbarHostState,
     navController: NavController,
 ) {
+    val clipboardManager = LocalClipboardManager.current
     ActionCollector(uiActions) { uiAction ->
         when (uiAction) {
             is LinksUiAction.ShowSnackbar -> snackbarHostState
@@ -65,8 +68,7 @@ private fun LinksContentActionCollector(
             is LinksUiAction.Navigate -> navController.navigate(uiAction.route)
 
             is LinksUiAction.CopyToClipboard -> {
-                // TODO: Implement platform-specific clipboard functionality
-                // For now, show a snackbar to indicate the text was copied
+                clipboardManager.setText(AnnotatedString(uiAction.text))
                 snackbarHostState.showSnackbar(getString(Res.string.copied_to_clipboard))
             }
         }
