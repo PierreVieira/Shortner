@@ -17,6 +17,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
+import shortener.feature.links.content.presentation.generated.resources.Res
+import shortener.feature.links.content.presentation.generated.resources.at
 
 class LinksViewModel(
     getAllLinks: GetAllLinksUseCase,
@@ -43,12 +46,12 @@ class LinksViewModel(
         }
     }
 
-    private fun LinkDomainModel.toPresentationModel(): LinkPresentationModel = LinkPresentationModel(
+    private suspend fun LinkDomainModel.toPresentationModel(): LinkPresentationModel = LinkPresentationModel(
         id = id,
         originalUrl = originalUrl,
         shortenedUrl = shortenedUrl,
         alias = alias,
-        createdAt = createdAt.toFormattedString(),
+        createdAt = createdAt.toFormattedString(getString(Res.string.at)),
         isCardExpanded = false,
         isMenuExpanded = false
     )

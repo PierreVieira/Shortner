@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="at">at</string>
     <string name="links_screen_title">Shortener</string>
     <string name="no_links_message">No shortened links yet. Shorten a link to get started!</string>
-    <string name="original_link_label">Original Link</string>
     <string name="shortened_link_label">Shortened Link</string>
     <string name="delete_link_button">Delete</string>
     <string name="alias">Alias</string>
@@ -11,4 +11,6 @@
     <string name="remove">Remove</string>
     <string name="created">Created at</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="collapse">Collapse</string>
+    <string name="expand">Expand</string>
 </resources>
