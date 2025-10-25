@@ -10,6 +10,9 @@ import com.pierre.shortner.feature.links.input.data.di.inputDataModule
 import com.pierre.shortner.feature.links.input.domain.di.inputDomainModule
 import com.pierre.shortner.feature.links.input.presentation.di.inputPresentationModule
 import com.pierre.shortner.feature.links.content.presentation.di.linksContentPresentationModule
+import com.pierre.shortner.feature.links.delete_link.data.di.deleteLinkDataModule
+import com.pierre.shortner.feature.links.delete_link.domain.di.deleteLinkDomainModule
+import com.pierre.shortner.feature.links.delete_link.presentation.di.deleteLinkPresentationModule
 import com.pierre.shortner.feature.links.top_bar.data.di.shortenerTopBarDataModule
 import com.pierre.shortner.feature.links.top_bar.domain.di.shortenerTopBarDomainModule
 import com.pierre.shortner.feature.theme_selection.data.di.themeSelectionDataModule
@@ -33,6 +36,9 @@ fun commonKoinInitializer(
             networkModule,
         )
         val featureModules = listOf(
+            deleteLinkDataModule,
+            deleteLinkDomainModule,
+            deleteLinkPresentationModule,
             deleteAllLinksDataModule,
             deleteAllLinksPresentationModule,
             linksContentDataModule,

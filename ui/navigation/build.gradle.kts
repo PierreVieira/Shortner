@@ -35,6 +35,7 @@ kotlin {
 
             // Feature
             implementation(projects.feature.links.root)
+            implementation(projects.feature.links.deleteLink.presentation)
             implementation(projects.feature.links.deleteAll.presentation)
             implementation(projects.feature.themeSelection.presentation)
         }

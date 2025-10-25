@@ -1,4 +1,4 @@
-package com.pierre.shortner.model.routes
+package com.pierre.shortner.model.routes.links
 
 import kotlinx.serialization.Serializable
 

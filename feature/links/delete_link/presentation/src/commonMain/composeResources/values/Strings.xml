@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="delete_link_title">Delete Link</string>
+    <string name="delete_link_message">Are you sure you want to delete this link? This action cannot be undone.</string>
+</resources>

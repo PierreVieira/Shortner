@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="links_screen_title">Shortener</string>
-    <string name="delete_all_button">Delete All</string>
-    <string name="theme_button">Theme</string>
     <string name="no_links_message">No shortened links yet. Shorten a link to get started!</string>
-    <string name="delete_all_links_title">Delete All Links</string>
-    <string name="delete_all_links_message">Are you sure you want to delete all shortened links? This action cannot be undone.</string>
-    <string name="delete_confirmation_confirm">Confirm</string>
-    <string name="delete_confirmation_cancel">Cancel</string>
     <string name="original_link_label">Original Link</string>
     <string name="shortened_link_label">Shortened Link</string>
     <string name="delete_link_button">Delete</string>

@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pierre.shortner.core.utils.toFormattedString
 import com.pierre.shortner.feature.links.content.domain.model.LinkDomainModel
-import com.pierre.shortner.feature.links.content.domain.usecase.DeleteLinkUseCase
 import com.pierre.shortner.feature.links.content.domain.usecase.GetAllLinksUseCase
 import com.pierre.shortner.feature.links.content.presentation.model.LinkPresentationModel
 import com.pierre.shortner.feature.links.content.presentation.model.action.LinksUiAction
 import com.pierre.shortner.feature.links.content.presentation.model.event.LinksUiEvent
 import com.pierre.shortner.feature.links.content.presentation.model.state.LinksUiState
+import com.pierre.shortner.model.routes.links.delete.DeleteLinkRoute
 import com.pierre.shortner.ui.utils.observe
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LinksViewModel(
-    private val deleteLink: DeleteLinkUseCase,
     getAllLinks: GetAllLinksUseCase,
 ) : ViewModel() {
 
@@ -58,8 +57,7 @@ class LinksViewModel(
     fun onEvent(event: LinksUiEvent) {
         when (event) {
             is LinksUiEvent.OnDeleteLink -> viewModelScope.launch {
-                deleteLink(event.id)
-                updateLinkById(event.id) { it.copy(isMenuExpanded = false) }
+                _uiActions.emit(LinksUiAction.Navigate(DeleteLinkRoute(event.id)))
             }
 
             is LinksUiEvent.OnCopyLink -> {

@@ -19,10 +19,6 @@ class LinksRepositoryImpl(
             entities.map { it.toDomain() }
         }
 
-    override suspend fun deleteLink(id: Long) {
-        linkDao.deleteById(id)
-    }
-
     private fun LinkEntity.toDomain(): LinkDomainModel = LinkDomainModel(
         id = id,
         originalUrl = originalLink,

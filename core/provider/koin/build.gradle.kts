@@ -28,6 +28,9 @@ kotlin {
             implementation(libs.koinCore)
 
             // Feature dependencies
+            implementation(projects.feature.links.deleteLink.data)
+            implementation(projects.feature.links.deleteLink.domain)
+            implementation(projects.feature.links.deleteLink.presentation)
             implementation(projects.feature.links.content.data)
             implementation(projects.feature.links.content.domain)
             implementation(projects.feature.links.content.presentation)

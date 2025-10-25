@@ -5,5 +5,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface LinksRepository {
     fun getAllLinks(): Flow<List<LinkDomainModel>>
-    suspend fun deleteLink(id: Long)
 }

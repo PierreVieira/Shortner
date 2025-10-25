@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.pierre.shortner.model.routes.LinksRoute
+import com.pierre.shortner.model.routes.links.LinksRoute
 
 @Composable
 fun RootAppNavHost(
@@ -22,7 +22,6 @@ fun RootAppNavHost(
             buildNavHost(
                 navHostController = navHostController,
                 switchPlatformColorSchemeComponent = switchPlatformColorSchemeComponent,
-                getNavigationModifier = getNavigationModifier,
             )
             extraRoute(this)
         }

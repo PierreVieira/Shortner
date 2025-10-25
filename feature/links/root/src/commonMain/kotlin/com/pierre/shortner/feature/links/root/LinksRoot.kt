@@ -9,7 +9,7 @@ import com.pierre.shortner.feature.links.content.presentation.LinksContentRoot
 import com.pierre.shortner.feature.links.input.presentation.UrlInputFieldRoot
 import com.pierre.shortner.feature.links.root.screen.LinksScreen
 import com.pierre.shortner.feature.links.top_bar.presentation.ShortenerTopAppBarRoot
-import com.pierre.shortner.model.routes.LinksRoute
+import com.pierre.shortner.model.routes.links.LinksRoute
 
 fun NavGraphBuilder.links(
     navController: NavController,

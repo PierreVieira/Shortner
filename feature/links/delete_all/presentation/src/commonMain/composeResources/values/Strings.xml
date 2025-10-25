@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="delete_all_links_title">Delete All Links</string>
-    <string name="delete_all_links_message">Are you sure you want to delete all shortened links? This action cannot be undone.</string>
+    <string name="delete_all_links_message">Are you sure you want to delete all links? This action cannot be undone.</string>
 </resources>
