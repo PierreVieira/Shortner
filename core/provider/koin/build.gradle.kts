@@ -53,6 +53,9 @@ kotlin {
             implementation(projects.core.provider.room)
             implementation(projects.core.network)
             implementation(projects.core.utils)
+
+            // UI dependencies
+            implementation(projects.ui.utils)
         }
     }
 }

@@ -21,6 +21,7 @@ import com.pierre.shortner.feature.theme_selection.di.themeSelectionPresentation
 import com.pierre.shortner.feature.theme_selection.domain.di.themeSelectionDomainModule
 import com.pierre.shortner.feature.links.top_bar.presentation.di.shortenerTopBarPresentationModule
 import com.pierre.shortner.network.di.networkModule
+import com.pierre.shortner.ui.utils.di.uiUtilsModule
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -56,6 +57,7 @@ fun commonKoinInitializer(
             themeSelectionDomainModule,
             themeSelectionPresentationModule,
         )
-        modules(coreModules + featureModules + extraModules)
+        val uiModule = listOf(uiUtilsModule)
+        modules(coreModules + featureModules + uiModule + extraModules)
     }
 }

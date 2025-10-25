@@ -3,11 +3,13 @@ package com.pierre.shortner.feature.links.content.presentation.mapper
 import com.pierre.shortner.core.utils.toFormattedString
 import com.pierre.shortner.feature.links.content.domain.model.LinkDomainModel
 import com.pierre.shortner.feature.links.content.presentation.model.LinkPresentationModel
-import org.jetbrains.compose.resources.getString
+import com.pierre.shortner.ui.utils.string_provider.StringProvider
 import shortener.feature.links.content.presentation.generated.resources.Res
 import shortener.feature.links.content.presentation.generated.resources.at
 
-class LinkModelMapperImpl : LinkModelMapper {
+class LinkModelMapperImpl(
+    private val stringProvider: StringProvider
+) : LinkModelMapper {
     override suspend fun toPresentation(domainModel: LinkDomainModel): LinkPresentationModel =
         domainModel.run {
             LinkPresentationModel(
@@ -15,7 +17,7 @@ class LinkModelMapperImpl : LinkModelMapper {
                 originalUrl = originalUrl,
                 shortenedUrl = shortenedUrl,
                 alias = alias,
-                createdAt = createdAt.toFormattedString(getString(Res.string.at)),
+                createdAt = createdAt.toFormattedString(stringProvider.getString(Res.string.at)),
                 isCardExpanded = false,
                 isMenuExpanded = false
             )
