@@ -36,7 +36,6 @@ include(":composeApp")
 
 // Core
 include(":core:network")
-include(":core:model:data_status")
 include(":core:model:theme")
 include(":core:model:routes")
 include(":core:provider:data_store")
@@ -47,7 +46,6 @@ include(":core:utils")
 // UI
 include(":ui:components:delete_dialog")
 include(":ui:components:icon_button")
-include(":ui:components:shimmer")
 include(":ui:components:spacer")
 include(":ui:navigation")
 include(":ui:theme")

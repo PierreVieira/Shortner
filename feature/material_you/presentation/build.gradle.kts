@@ -32,6 +32,9 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(compose.components.uiToolingPreview)
 
+            // Navigation
+            implementation(libs.navigation.compose)
+
             // Koin
             implementation(project.dependencies.platform(libs.koinBom))
             implementation(libs.koinCore)
@@ -41,6 +44,7 @@ kotlin {
             implementation(projects.feature.materialYou.domain)
 
             // Core
+            implementation(projects.core.model.routes)
             implementation(projects.core.utils)
 
             // Ui
@@ -48,7 +52,6 @@ kotlin {
             implementation(projects.ui.utils)
             implementation(projects.ui.components.iconButton)
             implementation(projects.ui.components.spacer)
-            implementation(compose.components.resources)
         }
     }
 }

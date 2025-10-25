@@ -6,22 +6,19 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import com.pierre.shortner.material_you.presentation.action.MaterialYouActionCollector
 import com.pierre.shortner.material_you.presentation.component.MaterialYouBottomSheet
 import com.pierre.shortner.material_you.presentation.component.MaterialYouSwitchComponent
-import com.pierre.shortner.material_you.presentation.model.AndroidColorSchemeUiAction
 import com.pierre.shortner.material_you.presentation.viewmodel.AndroidColorSchemeViewModel
 import com.pierre.shortner.model.routes.theme.MaterialYouRoute
-import com.pierre.shortner.ui.utils.ActionCollector
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,7 +33,11 @@ class MainActivity : ComponentActivity() {
             val onEvent = androidColorSchemeViewModel::onEvent
             val navHostController = rememberNavController()
             val materialYouBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-            MaterialYouActionCollector(navHostController, materialYouBottomSheetState)
+            MaterialYouActionCollector(
+                flow = androidColorSchemeViewModel.uiAction,
+                navHostController = navHostController,
+                materialYouBottomSheetState = materialYouBottomSheetState
+            )
             App(
                 navHostController = navHostController,
                 getSpecificColors = { isAppInDarkTheme ->
@@ -52,35 +53,16 @@ class MainActivity : ComponentActivity() {
                         onEvent = onEvent
                     )
                 },
-                extraRoute = { navGraphBuilder ->
-                    navGraphBuilder.dialog<MaterialYouRoute> {
+                extraRoute = {
+                    dialog<MaterialYouRoute> {
                         MaterialYouBottomSheet(
                             sheetState = materialYouBottomSheetState,
                             isMaterialYouActivated = isDynamicColorsOn,
-                            onEvent = onEvent
+                            onEvent = onEvent,
                         )
                     }
                 }
             )
-        }
-    }
-
-    @Composable
-    private fun MaterialYouActionCollector(
-        navHostController: NavHostController,
-        materialYouBottomSheetState: SheetState
-    ) {
-        ActionCollector(androidColorSchemeViewModel.uiAction) { uiAction ->
-            when (uiAction) {
-                AndroidColorSchemeUiAction.CloseBottomSheet -> {
-                    if (materialYouBottomSheetState.isVisible) {
-                        materialYouBottomSheetState.hide()
-                    }
-                    navHostController.navigateUp()
-                }
-                AndroidColorSchemeUiAction.NavigateToMaterialYouBottomSheet ->
-                    navHostController.navigate(MaterialYouRoute)
-            }
         }
     }
 

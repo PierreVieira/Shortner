@@ -27,7 +27,7 @@ fun App(
     switchPlatformColorSchemeComponent: @Composable (Modifier) -> Unit = {},
     getNavigationModifier: (onBack: () -> Unit) -> Modifier = { Modifier },
     getSpecificColors: @Composable ((isAppInDarkTheme: Boolean) -> ColorScheme?)? = null,
-    extraRoute: (NavGraphBuilder) -> Unit = { },
+    extraRoute: NavGraphBuilder.() -> Unit = { },
 ) {
     val viewModel: AppViewModel = koinViewModel()
     val theme by viewModel.themeState.collectAsState()
