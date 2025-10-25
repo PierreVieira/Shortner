@@ -40,7 +40,7 @@ kotlin {
             implementation(projects.feature.links.topBar.data)
             implementation(projects.feature.links.topBar.domain)
             implementation(projects.feature.links.topBar.presentation)
-            implementation(projects.feature.links.presentation)
+            implementation(projects.feature.links.root)
             implementation(projects.feature.themeSelection.data)
             implementation(projects.feature.themeSelection.domain)
             implementation(projects.feature.themeSelection.presentation)

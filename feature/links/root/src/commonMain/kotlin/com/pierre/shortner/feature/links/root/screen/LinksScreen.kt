@@ -1,4 +1,4 @@
-package com.pierre.shortner.feature.links.presentation.screen
+package com.pierre.shortner.feature.links.root.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues

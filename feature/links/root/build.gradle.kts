@@ -14,7 +14,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "LinksPresentation"
+            baseName = "LinksRoot"
             isStatic = true
         }
     }
@@ -73,7 +73,7 @@ dependencies {
 
 
 android {
-    namespace = "com.pierre.shortner.feature.links.presentation"
+    namespace = "com.pierre.shortner.feature.links.root"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
