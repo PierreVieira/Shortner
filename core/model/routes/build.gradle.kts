@@ -40,5 +40,3 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 }
-
-

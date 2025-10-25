@@ -6,10 +6,12 @@ import com.pierre.shortner.feature.links.content.domain.model.LinkDomainModel
 import com.pierre.shortner.feature.links.content.domain.repository.LinksRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 class LinksRepositoryImpl(
     private val linkDao: LinkDao,
 ) : LinksRepository {
@@ -24,8 +26,8 @@ class LinksRepositoryImpl(
         originalUrl = originalLink,
         shortenedUrl = shortedLink,
         alias = alias,
-        createdAt = Instant.fromEpochMilliseconds(createdAt)
+        createdAt = Instant
+            .fromEpochMilliseconds(createdAt)
             .toLocalDateTime(TimeZone.currentSystemDefault())
     )
-
 }

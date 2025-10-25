@@ -5,8 +5,10 @@ import com.pierre.shortner.core.room_provider.entity.LinkEntity
 import com.pierre.shortner.feature.links.input.data.dto.ShortenUrlDto
 import com.pierre.shortner.feature.links.input.data.repository.datasource.LinkInputRemoteDataSource
 import com.pierre.shortner.feature.links.input.domain.repository.LinkInputRepository
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 class LinkInputRepositoryImpl(
     private val remoteDataSource: LinkInputRemoteDataSource,
     private val linkDao: LinkDao,
