@@ -14,15 +14,17 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.StringResource
 import shortener.feature.links.input.presentation.generated.resources.Res
 import shortener.feature.links.input.presentation.generated.resources.empty_url_error
 import shortener.feature.links.input.presentation.generated.resources.invalid_url_error
+import shortener.feature.links.input.presentation.generated.resources.link_already_added
 import shortener.feature.links.input.presentation.generated.resources.shorten_url_error
 
 class LinkInputViewModel(
     private val validateUrl: ValidateUrlUseCase,
     private val postUrlToShort: ShortenUrlUseCase,
-): ViewModel() {
+) : ViewModel() {
     private val _uiState = MutableStateFlow(
         LinkInputUiState(
             urlText = "",
@@ -43,10 +45,11 @@ class LinkInputViewModel(
 
     private fun shortenUrl() {
         val url = uiState.value.urlText.trim()
-        validateUrl(url)
-            .onSuccess {
-                setLoadingState(true)
-                viewModelScope.launch {
+        viewModelScope.launch {
+            validateUrl(url)
+                .onSuccess {
+                    setLoadingState(true)
+
                     postUrlToShort(url)
                         .onSuccess {
                             setLoadingState(false)
@@ -57,34 +60,30 @@ class LinkInputViewModel(
                             _uiActions.emit(LinksUiAction.ShowSnackbar(Res.string.shorten_url_error))
                         }
                 }
-            }.onFailure { failure ->
-                launchAndEmit(getValidationErrorMessage(failure))
-            }
+                .onFailure { failure ->
+                    viewModelScope.launch {
+                        _uiActions.emit(LinksUiAction.ShowSnackbar(getValidationErrorMessage(failure)))
+                    }
+                }
+        }
     }
 
     private fun setLoadingState(isLoading: Boolean) {
         _uiState.update { it.copy(isSendButtonLoading = isLoading) }
     }
 
-    private fun getValidationErrorMessage(failure: Throwable): LinksUiAction {
-        return if (failure is UrlValidationException) {
-            val message = when (failure) {
+    private fun getValidationErrorMessage(failure: Throwable): StringResource =
+        if (failure is UrlValidationException) {
+            when (failure) {
                 is UrlValidationException.Empty -> Res.string.empty_url_error
                 is UrlValidationException.Invalid -> Res.string.invalid_url_error
+                is UrlValidationException.LinkAlreadyAdded -> Res.string.link_already_added
             }
-            LinksUiAction.ShowSnackbar(message)
         } else {
-            LinksUiAction.ShowSnackbar(Res.string.shorten_url_error)
+            Res.string.shorten_url_error
         }
-    }
 
     private fun updateUrlText(text: String) {
         _uiState.update { it.copy(urlText = text) }
-    }
-
-    private fun launchAndEmit(action: LinksUiAction) {
-        viewModelScope.launch {
-            _uiActions.emit(action)
-        }
     }
 }

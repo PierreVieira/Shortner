@@ -5,4 +5,5 @@
     <string name="invalid_url_error">Please enter a valid URL</string>
     <string name="empty_url_error">The URL should not be empty</string>
     <string name="shorten_url_error">Failed to shorten URL. Please try again.</string>
+    <string name="link_already_added">You already have this link added</string>
 </resources>

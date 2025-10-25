@@ -5,4 +5,5 @@
     <string name="invalid_url_error">Por favor, digite uma URL válida</string>
     <string name="empty_url_error">A URL não pode estar vazia</string>
     <string name="shorten_url_error">Falha ao encurtar URL. Tente novamente.</string>
+    <string name="link_already_added">Link já adicionado</string>
 </resources>
