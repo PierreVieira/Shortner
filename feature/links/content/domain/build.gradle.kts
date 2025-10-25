@@ -12,23 +12,36 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ModelRoutes"
+            baseName = "ContentDomain"
             isStatic = true
         }
     }
 
+    jvm()
 
     sourceSets {
         commonMain.dependencies {
-            // Kotlin Serialization
-            implementation(libs.kotlinSerializationJson)
+            // Koin (feature DI)
+            implementation(project.dependencies.platform(libs.koinBom))
+            implementation(libs.koinCore)
+
+            // Coroutines
+            implementation(libs.kotlinx.coroutines.core)
+
+            // DateTime
+            implementation(libs.kotlinx.datetime)
+
+            // Core
+            implementation(projects.core.utils)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
-    jvm()
 }
 
 android {
-    namespace = "com.pierre.shortner.model.routes"
+    namespace = "com.pierre.shortner.feature.links.content.domain"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -40,5 +53,3 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 }
-
-

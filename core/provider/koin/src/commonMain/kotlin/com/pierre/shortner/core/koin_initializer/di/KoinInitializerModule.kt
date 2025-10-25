@@ -2,14 +2,14 @@ package com.pierre.shortner.core.koin_initializer.di
 
 import com.pierre.shortner.core.data_store_provider.di.dataStoreProviderModule
 import com.pierre.shortner.core.room_provider.di.roomModule
-import com.pierre.shortner.feature.links.data.di.linksDataModule
+import com.pierre.shortner.feature.links.content.data.di.linksContentDataModule
+import com.pierre.shortner.feature.links.content.domain.di.linksContentDomainModule
 import com.pierre.shortner.feature.links.delete_all.di.deleteAllLinksDataModule
 import com.pierre.shortner.feature.links.delete_all.presentation.di.deleteAllLinksPresentationModule
-import com.pierre.shortner.feature.links.domain.di.linksDomainModule
 import com.pierre.shortner.feature.links.input.data.di.inputDataModule
 import com.pierre.shortner.feature.links.input.domain.di.inputDomainModule
 import com.pierre.shortner.feature.links.input.presentation.di.inputPresentationModule
-import com.pierre.shortner.feature.links.presentation.di.linksPresentationModule
+import com.pierre.shortner.feature.links.content.presentation.di.linksContentPresentationModule
 import com.pierre.shortner.feature.links.top_bar.data.di.shortenerTopBarDataModule
 import com.pierre.shortner.feature.links.top_bar.domain.di.shortenerTopBarDomainModule
 import com.pierre.shortner.feature.theme_selection.data.di.themeSelectionDataModule
@@ -35,9 +35,9 @@ fun commonKoinInitializer(
         val featureModules = listOf(
             deleteAllLinksDataModule,
             deleteAllLinksPresentationModule,
-            linksDataModule,
-            linksDomainModule,
-            linksPresentationModule,
+            linksContentDataModule,
+            linksContentDomainModule,
+            linksContentPresentationModule,
             inputDataModule,
             inputDomainModule,
             inputPresentationModule,

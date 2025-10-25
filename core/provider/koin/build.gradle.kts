@@ -28,21 +28,22 @@ kotlin {
             implementation(libs.koinCore)
 
             // Feature dependencies
+            implementation(projects.feature.links.content.data)
+            implementation(projects.feature.links.content.domain)
+            implementation(projects.feature.links.content.presentation)
             implementation(projects.feature.links.deleteAll.data)
             implementation(projects.feature.links.deleteAll.domain)
             implementation(projects.feature.links.deleteAll.presentation)
             implementation(projects.feature.links.input.data)
             implementation(projects.feature.links.input.domain)
             implementation(projects.feature.links.input.presentation)
-            implementation(projects.feature.links.data)
-            implementation(projects.feature.links.domain)
+            implementation(projects.feature.links.topBar.data)
+            implementation(projects.feature.links.topBar.domain)
+            implementation(projects.feature.links.topBar.presentation)
             implementation(projects.feature.links.presentation)
             implementation(projects.feature.themeSelection.data)
             implementation(projects.feature.themeSelection.domain)
             implementation(projects.feature.themeSelection.presentation)
-            implementation(projects.feature.links.topBar.data)
-            implementation(projects.feature.links.topBar.domain)
-            implementation(projects.feature.links.topBar.presentation)
 
             // Core dependencies
             implementation(projects.core.provider.dataStore)
