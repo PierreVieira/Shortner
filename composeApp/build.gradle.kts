@@ -86,6 +86,9 @@ kotlin {
             
             // Add platform-specific Skiko dependency for macOS ARM64
             implementation(compose.desktop.macos_arm64)
+            
+            // Ensure network dependencies are available for desktop
+            implementation(libs.ktor.client.cio)
         }
     }
 }
