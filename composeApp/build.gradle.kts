@@ -83,6 +83,9 @@ kotlin {
         jvmMain.dependencies {
             // DO NOT DELETE: Provide Dispatchers.Main for Desktop via Swing
             implementation(libs.kotlinx.coroutines.swing)
+            
+            // Add platform-specific Skiko dependency for macOS ARM64
+            implementation(compose.desktop.macos_arm64)
         }
     }
 }
@@ -109,8 +112,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
