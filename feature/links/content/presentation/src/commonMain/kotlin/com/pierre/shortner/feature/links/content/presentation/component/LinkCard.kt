@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,10 +28,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 import com.pierre.shortner.feature.links.content.presentation.model.LinkPresentationModel
 import com.pierre.shortner.feature.links.content.presentation.model.event.LinksUiEvent
 import com.pierre.shortner.ui.components.spacer.HorizontalSpacer
@@ -44,6 +49,32 @@ import shortener.feature.links.content.presentation.generated.resources.more_opt
 import shortener.feature.links.content.presentation.generated.resources.original_link_label
 import shortener.feature.links.content.presentation.generated.resources.remove
 import shortener.feature.links.content.presentation.generated.resources.shortened_link_label
+
+@Composable
+private fun ClickableLinkText(
+    text: String,
+    linkId: Long,
+    onEvent: (LinksUiEvent) -> Unit,
+    onClickEvent: LinksUiEvent,
+    onLongPressEvent: LinksUiEvent,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.primary,
+        textDecoration = TextDecoration.Underline,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+        modifier = modifier
+            .clickable { onEvent(onClickEvent) }
+            .pointerInput(linkId) {
+                detectTapGestures(
+                    onLongPress = { onEvent(onLongPressEvent) }
+                )
+            }
+    )
+}
 
 @Composable
 fun LinkCard(
@@ -74,11 +105,12 @@ fun LinkCard(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     )
-                    Text(
+                    ClickableLinkText(
                         text = linkPresentationModel.originalUrl,
-                        style = MaterialTheme.typography.bodyMedium,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
+                        linkId = linkPresentationModel.id,
+                        onEvent = onEvent,
+                        onClickEvent = LinksUiEvent.OnOriginalLinkClick(linkPresentationModel.id),
+                        onLongPressEvent = LinksUiEvent.OnOriginalLinkLongPress(linkPresentationModel.id)
                     )
                 }
 
@@ -153,11 +185,12 @@ fun LinkCard(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     )
-                    Text(
+                    ClickableLinkText(
                         text = linkPresentationModel.shortenedUrl,
-                        style = MaterialTheme.typography.bodyMedium,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
+                        linkId = linkPresentationModel.id,
+                        onEvent = onEvent,
+                        onClickEvent = LinksUiEvent.OnShortenedLinkClick(linkPresentationModel.id),
+                        onLongPressEvent = LinksUiEvent.OnShortenedLinkLongPress(linkPresentationModel.id)
                     )
                     VerticalSpacer(8)
                     Text(

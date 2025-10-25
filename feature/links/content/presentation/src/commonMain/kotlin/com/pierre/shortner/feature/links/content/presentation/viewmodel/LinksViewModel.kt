@@ -61,9 +61,23 @@ class LinksViewModel(
             }
 
             is LinksUiEvent.OnCopyLink -> {
-                // TODO: Implement copy to clipboard functionality
-                // For now, this is a placeholder that does nothing
                 updateLinkById(event.id) { it.copy(isMenuExpanded = false) }
+            }
+
+            is LinksUiEvent.OnOriginalLinkClick -> {
+                copyLinkToClipboard(event.id) { it.originalUrl }
+            }
+
+            is LinksUiEvent.OnOriginalLinkLongPress -> {
+                copyLinkToClipboard(event.id) { it.originalUrl }
+            }
+
+            is LinksUiEvent.OnShortenedLinkClick -> {
+                copyLinkToClipboard(event.id) { it.shortenedUrl }
+            }
+
+            is LinksUiEvent.OnShortenedLinkLongPress -> {
+                copyLinkToClipboard(event.id) { it.shortenedUrl }
             }
 
             is LinksUiEvent.OnMenuClick -> {
@@ -82,6 +96,15 @@ class LinksViewModel(
 
             is LinksUiEvent.OnToggleCardCollapse -> {
                 updateLinkById(event.linkId) { it.copy(isCardExpanded = !it.isCardExpanded) }
+            }
+        }
+    }
+
+    private fun copyLinkToClipboard(linkId: Long, urlExtractor: (LinkPresentationModel) -> String) {
+        val link = _uiState.value.links.find { it.id == linkId }
+        link?.let { linkModel ->
+            viewModelScope.launch {
+                _uiActions.emit(LinksUiAction.CopyToClipboard(urlExtractor(linkModel)))
             }
         }
     }

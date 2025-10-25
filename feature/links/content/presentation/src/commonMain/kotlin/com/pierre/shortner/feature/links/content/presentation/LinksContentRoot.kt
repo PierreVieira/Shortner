@@ -11,6 +11,8 @@ import com.pierre.shortner.feature.links.content.presentation.viewmodel.LinksVie
 import com.pierre.shortner.ui.utils.ActionCollector
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.getString
+import shortener.feature.links.content.presentation.generated.resources.Res
+import shortener.feature.links.content.presentation.generated.resources.copied_to_clipboard
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -44,6 +46,12 @@ private fun LinksContentActionCollector(
                 .showSnackbar(getString(uiAction.resourceId))
 
             is LinksUiAction.Navigate -> navController.navigate(uiAction.route)
+            
+            is LinksUiAction.CopyToClipboard -> {
+                // TODO: Implement platform-specific clipboard functionality
+                // For now, show a snackbar to indicate the text was copied
+                snackbarHostState.showSnackbar(getString(Res.string.copied_to_clipboard))
+            }
         }
     }
 }

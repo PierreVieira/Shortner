@@ -10,4 +10,5 @@
     <string name="copy">Copiar</string>
     <string name="remove">Remover</string>
     <string name="created">Criado em</string>
+    <string name="copied_to_clipboard">Copiado para a área de transferência</string>
 </resources>

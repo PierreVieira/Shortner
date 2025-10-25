@@ -6,4 +6,8 @@ sealed interface LinksUiEvent {
     data class OnMenuClick(val linkId: Long) : LinksUiEvent
     data object OnMenuDismiss : LinksUiEvent
     data class OnToggleCardCollapse(val linkId: Long) : LinksUiEvent
+    data class OnOriginalLinkClick(val id: Long) : LinksUiEvent
+    data class OnOriginalLinkLongPress(val id: Long) : LinksUiEvent
+    data class OnShortenedLinkClick(val id: Long) : LinksUiEvent
+    data class OnShortenedLinkLongPress(val id: Long) : LinksUiEvent
 }

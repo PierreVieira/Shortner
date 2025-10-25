@@ -5,4 +5,5 @@ import org.jetbrains.compose.resources.StringResource
 sealed interface LinksUiAction {
     data class ShowSnackbar(val resourceId: StringResource) : LinksUiAction
     data class Navigate(val route: Any): LinksUiAction
+    data class CopyToClipboard(val text: String) : LinksUiAction
 }
