@@ -3,8 +3,8 @@ package com.pierre.shortner.feature.links.input.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pierre.shortner.feature.links.input.domain.model.UrlValidationException
-import com.pierre.shortner.feature.links.input.domain.usecase.ShortenUrlUseCase
-import com.pierre.shortner.feature.links.input.domain.usecase.ValidateUrlUseCase
+import com.pierre.shortner.feature.links.input.domain.usecase.impl.PostUrlUseCase
+import com.pierre.shortner.feature.links.input.domain.usecase.impl.ValidateUrlUseCase
 import com.pierre.shortner.feature.links.input.presentation.model.LinkInputUiEvent
 import com.pierre.shortner.feature.links.input.presentation.model.LinkInputUiState
 import com.pierre.shortner.feature.links.input.presentation.model.LinksUiAction
@@ -23,7 +23,7 @@ import shortener.feature.links.input.presentation.generated.resources.shorten_ur
 
 class LinkInputViewModel(
     private val validateUrl: ValidateUrlUseCase,
-    private val postUrlToShort: ShortenUrlUseCase,
+    private val postUrlToShort: PostUrlUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(
         LinkInputUiState(

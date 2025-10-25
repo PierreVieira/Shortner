@@ -1,9 +1,13 @@
-package com.pierre.shortner.feature.links.input.domain.usecase
+package com.pierre.shortner.feature.links.input.domain.usecase.impl
 
 import com.pierre.shortner.feature.links.input.domain.model.UrlValidationException
+import com.pierre.shortner.feature.links.input.domain.usecase.IsLinkAlreadyAdded
+import com.pierre.shortner.feature.links.input.domain.usecase.ValidateUrl
 
-class ValidateUrlUseCase(private val isLinkAlreadyAdded: IsLinkAlreadyAddedUseCase) {
-    suspend operator fun invoke(url: String): Result<Unit> = runCatching {
+class ValidateUrlUseCase(
+    private val isLinkAlreadyAdded: IsLinkAlreadyAdded
+) : ValidateUrl {
+    override suspend operator fun invoke(url: String): Result<Unit> = runCatching {
         when {
             url.isBlank() -> throw UrlValidationException.Empty()
             isLinkAlreadyAdded(url) -> throw UrlValidationException.LinkAlreadyAdded()
