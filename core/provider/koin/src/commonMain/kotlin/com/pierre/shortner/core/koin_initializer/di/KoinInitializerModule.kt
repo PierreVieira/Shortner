@@ -2,6 +2,7 @@ package com.pierre.shortner.core.koin_initializer.di
 
 import com.pierre.shortner.core.data_store_provider.di.dataStoreProviderModule
 import com.pierre.shortner.core.room_provider.di.roomModule
+import com.pierre.shortner.core.utils.di.utilsModule
 import com.pierre.shortner.feature.links.content.data.di.linksContentDataModule
 import com.pierre.shortner.feature.links.content.domain.di.linksContentDomainModule
 import com.pierre.shortner.feature.links.delete_all.di.deleteAllLinksDataModule
@@ -34,6 +35,7 @@ fun commonKoinInitializer(
             dataStoreProviderModule,
             roomModule,
             networkModule,
+            utilsModule,
         )
         val featureModules = listOf(
             deleteLinkDataModule,

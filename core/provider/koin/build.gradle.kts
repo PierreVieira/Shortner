@@ -52,6 +52,7 @@ kotlin {
             implementation(projects.core.provider.dataStore)
             implementation(projects.core.provider.room)
             implementation(projects.core.network)
+            implementation(projects.core.utils)
         }
     }
 }
