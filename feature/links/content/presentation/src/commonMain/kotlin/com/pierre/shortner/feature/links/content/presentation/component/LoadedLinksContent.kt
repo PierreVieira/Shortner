@@ -19,19 +19,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.pierre.shortner.feature.links.content.presentation.model.LinkPresentationModel
 import com.pierre.shortner.feature.links.content.presentation.model.event.LinksUiEvent
-import com.pierre.shortner.feature.links.content.presentation.model.state.LinksUiState
 import org.jetbrains.compose.resources.stringResource
 import shortener.feature.links.content.presentation.generated.resources.Res
 import shortener.feature.links.content.presentation.generated.resources.no_links_message
 
 @Composable
-fun LinksContent(
-    uiState: LinksUiState,
+fun LoadedLinksContent(
+    links: List<LinkPresentationModel>,
     onEvent: (LinksUiEvent) -> Unit,
 ) {
     AnimatedContent(
-        targetState = uiState.links.isEmpty(),
+        targetState = links.isEmpty(),
         transitionSpec = {
             fadeIn(animationSpec = tween(400)) togetherWith fadeOut(animationSpec = tween(400))
         },
@@ -55,7 +55,7 @@ fun LinksContent(
                 contentPadding = PaddingValues(bottom = 80.dp) // Space for FAB
             ) {
                 items(
-                    items = uiState.links,
+                    items = links,
                     key = { it.id },
                 ) { linkPresentationModel ->
                     LinkCard(

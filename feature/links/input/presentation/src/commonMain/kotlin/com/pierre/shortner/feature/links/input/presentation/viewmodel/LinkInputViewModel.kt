@@ -40,7 +40,10 @@ class LinkInputViewModel(
         observe(shortenUrl(uiState.value.urlText)) { step ->
             when (step) {
                 ShortenUrlStep.InProgress -> setLoadingState(true)
-                ShortenUrlStep.Success -> setLoadingState(false)
+                ShortenUrlStep.Success -> {
+                    setLoadingState(false)
+                    updateUrlText("")
+                }
                 is ShortenUrlStep.Error -> {
                     setLoadingState(false)
                     _uiActions.emit(

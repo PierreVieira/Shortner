@@ -2,8 +2,7 @@ package com.pierre.shortner.feature.links.content.presentation.model.state
 
 import com.pierre.shortner.feature.links.content.presentation.model.LinkPresentationModel
 
-data class LinksUiState(
-    val links: List<LinkPresentationModel>,
-    val isSendButtonLoading: Boolean,
-    val urlText: String,
-)
+sealed interface LinkListUiState {
+    data object Loading: LinkListUiState
+    data class Loaded(val data: List<LinkPresentationModel>): LinkListUiState
+}
