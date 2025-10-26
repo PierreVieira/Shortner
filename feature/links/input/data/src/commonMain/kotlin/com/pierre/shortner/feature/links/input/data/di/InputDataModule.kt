@@ -1,5 +1,7 @@
 package com.pierre.shortner.feature.links.input.data.di
 
+import com.pierre.shortner.feature.links.input.data.mapper.ShortenUrlDtoMapper
+import com.pierre.shortner.feature.links.input.data.mapper.ShortenUrlDtoMapperImpl
 import com.pierre.shortner.feature.links.input.data.repository.LinkInputRepositoryImpl
 import com.pierre.shortner.feature.links.input.data.repository.datasource.LinkInputRemoteDataSource
 import com.pierre.shortner.feature.links.input.data.repository.datasource.LinkInputRemoteDataSourceImpl
@@ -11,4 +13,5 @@ import org.koin.dsl.module
 val inputDataModule = module {
     factoryOf(::LinkInputRemoteDataSourceImpl).bind<LinkInputRemoteDataSource>()
     factoryOf(::LinkInputRepositoryImpl).bind<LinkInputRepository>()
+    factoryOf(::ShortenUrlDtoMapperImpl).bind<ShortenUrlDtoMapper>()
 }
