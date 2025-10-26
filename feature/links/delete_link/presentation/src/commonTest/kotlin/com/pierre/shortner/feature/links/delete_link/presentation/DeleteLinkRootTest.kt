@@ -1,5 +1,4 @@
-package com.pierre.shortner.feature.links.delete_link.presentation
-
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
@@ -7,70 +6,113 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.pierre.shortner.feature.links.delete_link.domain.repository.DeleteLinkRepository
+import com.pierre.shortner.feature.links.delete_link.presentation.deleteLink
 import com.pierre.shortner.feature.links.delete_link.presentation.di.deleteLinkPresentationModule
 import com.pierre.shortner.model.routes.links.delete.DeleteLinkRoute
 import kotlinx.coroutines.CompletableDeferred
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
+// TestLifecycleOwner class remains the same
+class TestLifecycleOwner : LifecycleOwner {
+    private val lifecycleRegistry = LifecycleRegistry(this)
+
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
+
+    fun handleLifecycleEvent(event: Lifecycle.Event) {
+        lifecycleRegistry.handleLifecycleEvent(event)
+    }
+
+    fun resume() {
+        handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+        handleLifecycleEvent(Lifecycle.Event.ON_START)
+        handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    }
+
+    fun destroy() {
+        handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    }
+}
+
 @ExperimentalTestApi
 class DeleteLinkRootTest {
 
-    @Test
-    fun `when dialog is initialized then configure it with correct texts`() = runComposeUiTest {
-        // Given
-        val fakeRepository = FakeDeleteLinkRepository()
-        // Start Koin before composition
-        stopKoinSafe()
+    private lateinit var repository: DeleteLinkRepository
+
+    @BeforeTest
+    fun setupKoin() {
+        stopKoin()
+        repository = FakeDeleteLinkRepository()
         startKoin {
             modules(
                 deleteLinkPresentationModule,
-                module { single<DeleteLinkRepository> { fakeRepository } }
+                module { single<DeleteLinkRepository> { repository } }
             )
         }
+    }
+
+    @AfterTest
+    fun tearDownKoin() {
+        runCatching { stopKoin() }
+    }
+
+    @Test
+    fun `when dialog is initialized then configure it with correct texts`() = runComposeUiTest {
+        val testLifecycleOwner = TestLifecycleOwner()
+
         setContent {
-            val navController = rememberNavController()
-            NavHost(
-                navController = navController,
-                startDestination = DeleteLinkRoute(TEST_ID),
-                builder = { deleteLink(navController) }
-            )
+            CompositionLocalProvider(LocalLifecycleOwner provides testLifecycleOwner) {
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = DeleteLinkRoute(TEST_ID),
+                    builder = { deleteLink(navController) }
+                )
+            }
         }
+        testLifecycleOwner.resume()
 
         // Then - title, message and buttons are visible
         onNodeWithText("Delete Link").assertIsDisplayed()
-        onNodeWithText("Are you sure you want to delete this link?", substring = true).assertIsDisplayed()
+        onNodeWithText(
+            "Are you sure you want to delete this link?",
+            substring = true
+        ).assertIsDisplayed()
         onNodeWithText("Confirm").assertIsDisplayed()
         onNodeWithText("Cancel").assertIsDisplayed()
-        stopKoinSafe()
+
+        testLifecycleOwner.destroy()
     }
 
     @Test
     fun `when click on dismiss then dialog is closed`() = runComposeUiTest {
         // Given
-        val fakeRepository = FakeDeleteLinkRepository()
-        stopKoinSafe()
-        startKoin {
-            modules(
-                deleteLinkPresentationModule,
-                module { single<DeleteLinkRepository> { fakeRepository } }
-            )
-        }
+        val testLifecycleOwner = TestLifecycleOwner()
         setContent {
-            val navController = rememberNavController()
-            NavHost(
-                navController = navController,
-                startDestination = DeleteLinkRoute(TEST_ID),
-                builder = { deleteLink(navController) }
-            )
+            CompositionLocalProvider(LocalLifecycleOwner provides testLifecycleOwner) {
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = DeleteLinkRoute(TEST_ID),
+                    builder = { deleteLink(navController) }
+                )
+            }
         }
+        testLifecycleOwner.resume()
         onNodeWithText("Delete Link").assertIsDisplayed()
 
         // When
@@ -78,29 +120,26 @@ class DeleteLinkRootTest {
 
         // Then
         onAllNodesWithText("Delete Link").assertCountEquals(0)
-        stopKoinSafe()
+
+        testLifecycleOwner.destroy()
     }
 
     @Test
     fun `when click on confirm then shows loading calls repository and closes dialog`() = runComposeUiTest {
         // Given
+        val testLifecycleOwner = TestLifecycleOwner()
         val fakeRepository = FakeDeleteLinkRepository()
         val gate = CompletableDeferred<Unit>()
         fakeRepository.gate = gate
-        stopKoinSafe()
-        startKoin {
-            modules(
-                deleteLinkPresentationModule,
-                module { single<DeleteLinkRepository> { fakeRepository } }
-            )
-        }
         setContent {
-            val navController = rememberNavController()
-            NavHost(
-                navController = navController,
-                startDestination = DeleteLinkRoute(TEST_ID),
-                builder = { deleteLink(navController) }
-            )
+            CompositionLocalProvider(LocalLifecycleOwner provides testLifecycleOwner) {
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = DeleteLinkRoute(TEST_ID),
+                    builder = { deleteLink(navController) }
+                )
+            }
         }
 
         // When
@@ -115,11 +154,8 @@ class DeleteLinkRootTest {
         gate.complete(Unit)
         waitForIdle()
         onAllNodesWithText("Delete Link").assertCountEquals(0)
-        stopKoinSafe()
-    }
 
-    private fun stopKoinSafe() {
-        runCatching { stopKoin() }
+        testLifecycleOwner.destroy()
     }
 
     private class FakeDeleteLinkRepository : DeleteLinkRepository {
@@ -130,7 +166,6 @@ class DeleteLinkRootTest {
         override suspend fun deleteLink(id: Long) {
             called = true
             capturedId = id
-            // Suspend until the gate is completed to simulate long-running operation
             gate?.await()
         }
     }

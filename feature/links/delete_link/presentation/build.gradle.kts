@@ -62,6 +62,8 @@ kotlin {
 
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
+
+            implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
         }
         jvmMain.dependencies {
             // The following dependencies are for UI tests:
