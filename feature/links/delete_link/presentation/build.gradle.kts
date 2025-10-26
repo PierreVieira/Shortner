@@ -62,13 +62,10 @@ kotlin {
 
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
-
-            implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
         }
-        jvmMain.dependencies {
+        jvmTest.dependencies {
             // The following dependencies are for UI tests:
             implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
         }
     }
 }
@@ -76,11 +73,6 @@ kotlin {
 dependencies {
     // Compose Preview tooling only for debug builds
     debugImplementation(libs.uiTooling)
-
-    dependencies {
-        androidTestImplementation(libs.androidx.ui.test.junit4.android)
-        debugImplementation(libs.androidx.ui.test.manifest)
-    }
 }
 
 android {
