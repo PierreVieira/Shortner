@@ -21,8 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
-import com.pierre.shortner.feature.links.content.presentation.component.components.ClickableLinkText
-import com.pierre.shortner.feature.links.content.presentation.component.components.LinkCardContent
 import com.pierre.shortner.feature.links.content.presentation.model.LinkPresentationModel
 import com.pierre.shortner.feature.links.content.presentation.model.event.LinksUiEvent
 import com.pierre.shortner.ui.components.icon_button.CommonIconButton

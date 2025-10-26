@@ -1,4 +1,4 @@
-package com.pierre.shortner.feature.links.content.presentation.component.components
+package com.pierre.shortner.feature.links.content.presentation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
