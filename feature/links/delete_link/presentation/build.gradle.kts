@@ -59,6 +59,14 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
+
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+        }
+        jvmMain.dependencies {
+            // The following dependencies are for UI tests:
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.swing)
         }
     }
 }
@@ -66,6 +74,11 @@ kotlin {
 dependencies {
     // Compose Preview tooling only for debug builds
     debugImplementation(libs.uiTooling)
+
+    dependencies {
+        androidTestImplementation(libs.androidx.ui.test.junit4.android)
+        debugImplementation(libs.androidx.ui.test.manifest)
+    }
 }
 
 android {
@@ -75,6 +88,7 @@ android {
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
         consumerProguardFiles("consumer-rules.pro")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21

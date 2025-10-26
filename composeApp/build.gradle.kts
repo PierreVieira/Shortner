@@ -84,8 +84,8 @@ kotlin {
             // DO NOT DELETE: Provide Dispatchers.Main for Desktop via Swing
             implementation(libs.kotlinx.coroutines.swing)
             
-            // Add platform-specific Skiko dependency for macOS ARM64
-            implementation(compose.desktop.macos_arm64)
+            // Add platform-specific Skiko dependency for desktop
+            implementation(compose.desktop.currentOs)
             
             // Ensure network dependencies are available for desktop
             implementation(libs.ktor.client.cio)
